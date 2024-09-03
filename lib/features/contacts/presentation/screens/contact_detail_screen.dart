@@ -33,15 +33,16 @@ class ContactDetailScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Contact Name and Action Buttons
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          '${contact.firstName} ${contact.lastName}',
-                          style: const TextStyle(
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.bold,
+                        Expanded(
+                          child: Text(
+                            '${contact.firstName} ${contact.lastName}',
+                            maxLines: 2,
+                            style: const TextStyle(
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         Row(
