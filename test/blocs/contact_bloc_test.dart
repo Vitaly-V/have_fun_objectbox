@@ -11,17 +11,29 @@ void main() {
   late ContactBloc contactBloc;
   late MockContactRepository mockContactRepository;
 
+  // Updated Contact instance with multiple phone numbers and addresses
   const contact = Contact(
     id: 1,
     contactID: '123',
     firstName: 'John',
     lastName: 'Doe',
-    phoneNumber: '123-456-7890',
-    streetAddress1: '123 Main St',
-    streetAddress2: '',
-    city: 'Springfield',
-    state: 'IL',
-    zipCode: '62704',
+    phoneNumbers: ['123-456-7890', '098-765-4321'],
+    addresses: [
+      Address(
+        streetAddress1: '123 Main St',
+        streetAddress2: '',
+        city: 'Springfield',
+        state: 'IL',
+        zipCode: '62704',
+      ),
+      Address(
+        streetAddress1: '456 Elm St',
+        streetAddress2: 'Apt 2',
+        city: 'Shelbyville',
+        state: 'IL',
+        zipCode: '62705',
+      ),
+    ],
   );
 
   setUp(() {

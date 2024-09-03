@@ -14,71 +14,96 @@ import 'package:objectbox/internal.dart'
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
+import 'features/contacts/data/models/address_model.dart';
 import 'features/contacts/data/models/contact_model.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
 final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(2, 6710870472237389569),
-      name: 'ContactModel',
-      lastPropertyId: const obx_int.IdUid(10, 6760589252008131277),
+      id: const obx_int.IdUid(1, 8495289615564868449),
+      name: 'AddressModel',
+      lastPropertyId: const obx_int.IdUid(7, 8787038161581568332),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 7894176654053882959),
+            id: const obx_int.IdUid(1, 2331782030422123245),
             name: 'id',
             type: 6,
             flags: 1),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 428242819342155696),
-            name: 'contactID',
-            type: 9,
-            flags: 2080,
-            indexId: const obx_int.IdUid(7, 4134830112461790379)),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 1518868917494940466),
-            name: 'firstName',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 2671882194143879513),
-            name: 'lastName',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 6691486623540154041),
-            name: 'phoneNumber',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(6, 2337798589158418290),
+            id: const obx_int.IdUid(2, 8935017646381914563),
             name: 'streetAddress1',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(7, 9077609147710124561),
+            id: const obx_int.IdUid(3, 4608840774204258260),
             name: 'streetAddress2',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(8, 4436707132481651671),
+            id: const obx_int.IdUid(4, 665697332881934786),
             name: 'city',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(9, 491745691157431762),
+            id: const obx_int.IdUid(5, 460552528374158697),
             name: 'state',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(10, 6760589252008131277),
+            id: const obx_int.IdUid(6, 6323604515362611106),
             name: 'zipCode',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 8787038161581568332),
+            name: 'contactId',
+            type: 11,
+            flags: 520,
+            indexId: const obx_int.IdUid(1, 5769642547634830104),
+            relationTarget: 'ContactModel')
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(2, 7529736509799682306),
+      name: 'ContactModel',
+      lastPropertyId: const obx_int.IdUid(5, 6861553114493198524),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 2855025359578090004),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8075427872486951477),
+            name: 'contactID',
+            type: 9,
+            flags: 2080,
+            indexId: const obx_int.IdUid(2, 1098468377347511481)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 9135665030574258102),
+            name: 'firstName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 6807623916486118953),
+            name: 'lastName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 6861553114493198524),
+            name: 'phoneNumbers',
             type: 9,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
-      backlinks: <obx_int.ModelBacklink>[])
+      backlinks: <obx_int.ModelBacklink>[
+        obx_int.ModelBacklink(
+            name: 'addresses', srcEntity: 'AddressModel', srcField: '')
+      ])
 ];
 
 /// Shortcut for [obx.Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -116,40 +141,81 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(2, 6710870472237389569),
-      lastIndexId: const obx_int.IdUid(7, 4134830112461790379),
+      lastEntityId: const obx_int.IdUid(2, 7529736509799682306),
+      lastIndexId: const obx_int.IdUid(2, 1098468377347511481),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
-      retiredEntityUids: const [4350236757225545660],
-      retiredIndexUids: const [
-        4788443931119281205,
-        7565404166243050380,
-        2328051538653162854,
-        943446603001662575,
-        4172305053465114874
-      ],
-      retiredPropertyUids: const [
-        2788435871241652493,
-        1215065144023697562,
-        5687091989650867676,
-        4643923104021641402,
-        6498196564557853855,
-        3674664532661124932,
-        5305987321407732014,
-        2108199212380822652,
-        785839783819721538,
-        6053822086714351362
-      ],
+      retiredEntityUids: const [],
+      retiredIndexUids: const [],
+      retiredPropertyUids: const [],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
       version: 1);
 
   final bindings = <Type, obx_int.EntityDefinition>{
-    ContactModel: obx_int.EntityDefinition<ContactModel>(
+    AddressModel: obx_int.EntityDefinition<AddressModel>(
         model: _entities[0],
+        toOneRelations: (AddressModel object) => [object.contact],
+        toManyRelations: (AddressModel object) => {},
+        getId: (AddressModel object) => object.id,
+        setId: (AddressModel object, int id) {
+          object.id = id;
+        },
+        objectToFB: (AddressModel object, fb.Builder fbb) {
+          final streetAddress1Offset = fbb.writeString(object.streetAddress1);
+          final streetAddress2Offset = fbb.writeString(object.streetAddress2);
+          final cityOffset = fbb.writeString(object.city);
+          final stateOffset = fbb.writeString(object.state);
+          final zipCodeOffset = fbb.writeString(object.zipCode);
+          fbb.startTable(8);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, streetAddress1Offset);
+          fbb.addOffset(2, streetAddress2Offset);
+          fbb.addOffset(3, cityOffset);
+          fbb.addOffset(4, stateOffset);
+          fbb.addOffset(5, zipCodeOffset);
+          fbb.addInt64(6, object.contact.targetId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final streetAddress1Param =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final streetAddress2Param =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final cityParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final stateParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final zipCodeParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final object = AddressModel(
+              id: idParam,
+              streetAddress1: streetAddress1Param,
+              streetAddress2: streetAddress2Param,
+              city: cityParam,
+              state: stateParam,
+              zipCode: zipCodeParam);
+          object.contact.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          object.contact.attach(store);
+          return object;
+        }),
+    ContactModel: obx_int.EntityDefinition<ContactModel>(
+        model: _entities[1],
         toOneRelations: (ContactModel object) => [],
-        toManyRelations: (ContactModel object) => {},
+        toManyRelations: (ContactModel object) => {
+              obx_int.RelInfo<AddressModel>.toOneBacklink(7, object.id,
+                      (AddressModel srcObject) => srcObject.contact):
+                  object.addresses
+            },
         getId: (ContactModel object) => object.id,
         setId: (ContactModel object, int id) {
           object.id = id;
@@ -158,23 +224,13 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final contactIDOffset = fbb.writeString(object.contactID);
           final firstNameOffset = fbb.writeString(object.firstName);
           final lastNameOffset = fbb.writeString(object.lastName);
-          final phoneNumberOffset = fbb.writeString(object.phoneNumber);
-          final streetAddress1Offset = fbb.writeString(object.streetAddress1);
-          final streetAddress2Offset = fbb.writeString(object.streetAddress2);
-          final cityOffset = fbb.writeString(object.city);
-          final stateOffset = fbb.writeString(object.state);
-          final zipCodeOffset = fbb.writeString(object.zipCode);
-          fbb.startTable(11);
+          final phoneNumbersOffset = fbb.writeString(object.phoneNumbers);
+          fbb.startTable(6);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, contactIDOffset);
           fbb.addOffset(2, firstNameOffset);
           fbb.addOffset(3, lastNameOffset);
-          fbb.addOffset(4, phoneNumberOffset);
-          fbb.addOffset(5, streetAddress1Offset);
-          fbb.addOffset(6, streetAddress2Offset);
-          fbb.addOffset(7, cityOffset);
-          fbb.addOffset(8, stateOffset);
-          fbb.addOffset(9, zipCodeOffset);
+          fbb.addOffset(4, phoneNumbersOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -189,33 +245,20 @@ obx_int.ModelDefinition getObjectBoxModel() {
               .vTableGet(buffer, rootOffset, 8, '');
           final lastNameParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 10, '');
-          final phoneNumberParam =
+          final phoneNumbersParam =
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 12, '');
-          final streetAddress1Param =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 14, '');
-          final streetAddress2Param =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 16, '');
-          final cityParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 18, '');
-          final stateParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 20, '');
-          final zipCodeParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 22, '');
           final object = ContactModel(
               id: idParam,
               contactID: contactIDParam,
               firstName: firstNameParam,
               lastName: lastNameParam,
-              phoneNumber: phoneNumberParam,
-              streetAddress1: streetAddress1Param,
-              streetAddress2: streetAddress2Param,
-              city: cityParam,
-              state: stateParam,
-              zipCode: zipCodeParam);
-
+              phoneNumbers: phoneNumbersParam);
+          obx_int.InternalToManyAccess.setRelInfo<ContactModel>(
+              object.addresses,
+              store,
+              obx_int.RelInfo<AddressModel>.toOneBacklink(
+                  7, object.id, (AddressModel srcObject) => srcObject.contact));
           return object;
         })
   };
@@ -223,45 +266,60 @@ obx_int.ModelDefinition getObjectBoxModel() {
   return obx_int.ModelDefinition(model, bindings);
 }
 
+/// [AddressModel] entity fields to define ObjectBox queries.
+class AddressModel_ {
+  /// See [AddressModel.id].
+  static final id =
+      obx.QueryIntegerProperty<AddressModel>(_entities[0].properties[0]);
+
+  /// See [AddressModel.streetAddress1].
+  static final streetAddress1 =
+      obx.QueryStringProperty<AddressModel>(_entities[0].properties[1]);
+
+  /// See [AddressModel.streetAddress2].
+  static final streetAddress2 =
+      obx.QueryStringProperty<AddressModel>(_entities[0].properties[2]);
+
+  /// See [AddressModel.city].
+  static final city =
+      obx.QueryStringProperty<AddressModel>(_entities[0].properties[3]);
+
+  /// See [AddressModel.state].
+  static final state =
+      obx.QueryStringProperty<AddressModel>(_entities[0].properties[4]);
+
+  /// See [AddressModel.zipCode].
+  static final zipCode =
+      obx.QueryStringProperty<AddressModel>(_entities[0].properties[5]);
+
+  /// See [AddressModel.contact].
+  static final contact = obx.QueryRelationToOne<AddressModel, ContactModel>(
+      _entities[0].properties[6]);
+}
+
 /// [ContactModel] entity fields to define ObjectBox queries.
 class ContactModel_ {
   /// See [ContactModel.id].
   static final id =
-      obx.QueryIntegerProperty<ContactModel>(_entities[0].properties[0]);
+      obx.QueryIntegerProperty<ContactModel>(_entities[1].properties[0]);
 
   /// See [ContactModel.contactID].
   static final contactID =
-      obx.QueryStringProperty<ContactModel>(_entities[0].properties[1]);
+      obx.QueryStringProperty<ContactModel>(_entities[1].properties[1]);
 
   /// See [ContactModel.firstName].
   static final firstName =
-      obx.QueryStringProperty<ContactModel>(_entities[0].properties[2]);
+      obx.QueryStringProperty<ContactModel>(_entities[1].properties[2]);
 
   /// See [ContactModel.lastName].
   static final lastName =
-      obx.QueryStringProperty<ContactModel>(_entities[0].properties[3]);
+      obx.QueryStringProperty<ContactModel>(_entities[1].properties[3]);
 
-  /// See [ContactModel.phoneNumber].
-  static final phoneNumber =
-      obx.QueryStringProperty<ContactModel>(_entities[0].properties[4]);
+  /// See [ContactModel.phoneNumbers].
+  static final phoneNumbers =
+      obx.QueryStringProperty<ContactModel>(_entities[1].properties[4]);
 
-  /// See [ContactModel.streetAddress1].
-  static final streetAddress1 =
-      obx.QueryStringProperty<ContactModel>(_entities[0].properties[5]);
-
-  /// See [ContactModel.streetAddress2].
-  static final streetAddress2 =
-      obx.QueryStringProperty<ContactModel>(_entities[0].properties[6]);
-
-  /// See [ContactModel.city].
-  static final city =
-      obx.QueryStringProperty<ContactModel>(_entities[0].properties[7]);
-
-  /// See [ContactModel.state].
-  static final state =
-      obx.QueryStringProperty<ContactModel>(_entities[0].properties[8]);
-
-  /// See [ContactModel.zipCode].
-  static final zipCode =
-      obx.QueryStringProperty<ContactModel>(_entities[0].properties[9]);
+  /// see [ContactModel.addresses]
+  static final addresses = obx.QueryBacklinkToMany<AddressModel, ContactModel>(
+      AddressModel_.contact);
 }

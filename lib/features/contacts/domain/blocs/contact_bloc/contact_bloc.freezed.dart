@@ -23,6 +23,7 @@ mixin _$ContactEvent {
     required TResult Function(Contact contact) contactUpdated,
     required TResult Function(int id) contactDeleted,
     required TResult Function(Contact contact) contactSelected,
+    required TResult Function(String query) contactsSearched,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -32,6 +33,7 @@ mixin _$ContactEvent {
     TResult? Function(Contact contact)? contactUpdated,
     TResult? Function(int id)? contactDeleted,
     TResult? Function(Contact contact)? contactSelected,
+    TResult? Function(String query)? contactsSearched,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -41,6 +43,7 @@ mixin _$ContactEvent {
     TResult Function(Contact contact)? contactUpdated,
     TResult Function(int id)? contactDeleted,
     TResult Function(Contact contact)? contactSelected,
+    TResult Function(String query)? contactsSearched,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -51,6 +54,7 @@ mixin _$ContactEvent {
     required TResult Function(ContactUpdated value) contactUpdated,
     required TResult Function(ContactDeleted value) contactDeleted,
     required TResult Function(ContactSelected value) contactSelected,
+    required TResult Function(ContactsSearched value) contactsSearched,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,6 +64,7 @@ mixin _$ContactEvent {
     TResult? Function(ContactUpdated value)? contactUpdated,
     TResult? Function(ContactDeleted value)? contactDeleted,
     TResult? Function(ContactSelected value)? contactSelected,
+    TResult? Function(ContactsSearched value)? contactsSearched,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -69,6 +74,7 @@ mixin _$ContactEvent {
     TResult Function(ContactUpdated value)? contactUpdated,
     TResult Function(ContactDeleted value)? contactDeleted,
     TResult Function(ContactSelected value)? contactSelected,
+    TResult Function(ContactsSearched value)? contactsSearched,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -141,6 +147,7 @@ class _$ContactsLoadedImpl implements ContactsLoaded {
     required TResult Function(Contact contact) contactUpdated,
     required TResult Function(int id) contactDeleted,
     required TResult Function(Contact contact) contactSelected,
+    required TResult Function(String query) contactsSearched,
   }) {
     return contactsLoaded();
   }
@@ -153,6 +160,7 @@ class _$ContactsLoadedImpl implements ContactsLoaded {
     TResult? Function(Contact contact)? contactUpdated,
     TResult? Function(int id)? contactDeleted,
     TResult? Function(Contact contact)? contactSelected,
+    TResult? Function(String query)? contactsSearched,
   }) {
     return contactsLoaded?.call();
   }
@@ -165,6 +173,7 @@ class _$ContactsLoadedImpl implements ContactsLoaded {
     TResult Function(Contact contact)? contactUpdated,
     TResult Function(int id)? contactDeleted,
     TResult Function(Contact contact)? contactSelected,
+    TResult Function(String query)? contactsSearched,
     required TResult orElse(),
   }) {
     if (contactsLoaded != null) {
@@ -181,6 +190,7 @@ class _$ContactsLoadedImpl implements ContactsLoaded {
     required TResult Function(ContactUpdated value) contactUpdated,
     required TResult Function(ContactDeleted value) contactDeleted,
     required TResult Function(ContactSelected value) contactSelected,
+    required TResult Function(ContactsSearched value) contactsSearched,
   }) {
     return contactsLoaded(this);
   }
@@ -193,6 +203,7 @@ class _$ContactsLoadedImpl implements ContactsLoaded {
     TResult? Function(ContactUpdated value)? contactUpdated,
     TResult? Function(ContactDeleted value)? contactDeleted,
     TResult? Function(ContactSelected value)? contactSelected,
+    TResult? Function(ContactsSearched value)? contactsSearched,
   }) {
     return contactsLoaded?.call(this);
   }
@@ -205,6 +216,7 @@ class _$ContactsLoadedImpl implements ContactsLoaded {
     TResult Function(ContactUpdated value)? contactUpdated,
     TResult Function(ContactDeleted value)? contactDeleted,
     TResult Function(ContactSelected value)? contactSelected,
+    TResult Function(ContactsSearched value)? contactsSearched,
     required TResult orElse(),
   }) {
     if (contactsLoaded != null) {
@@ -303,6 +315,7 @@ class _$ContactAddedImpl implements ContactAdded {
     required TResult Function(Contact contact) contactUpdated,
     required TResult Function(int id) contactDeleted,
     required TResult Function(Contact contact) contactSelected,
+    required TResult Function(String query) contactsSearched,
   }) {
     return contactAdded(contact);
   }
@@ -315,6 +328,7 @@ class _$ContactAddedImpl implements ContactAdded {
     TResult? Function(Contact contact)? contactUpdated,
     TResult? Function(int id)? contactDeleted,
     TResult? Function(Contact contact)? contactSelected,
+    TResult? Function(String query)? contactsSearched,
   }) {
     return contactAdded?.call(contact);
   }
@@ -327,6 +341,7 @@ class _$ContactAddedImpl implements ContactAdded {
     TResult Function(Contact contact)? contactUpdated,
     TResult Function(int id)? contactDeleted,
     TResult Function(Contact contact)? contactSelected,
+    TResult Function(String query)? contactsSearched,
     required TResult orElse(),
   }) {
     if (contactAdded != null) {
@@ -343,6 +358,7 @@ class _$ContactAddedImpl implements ContactAdded {
     required TResult Function(ContactUpdated value) contactUpdated,
     required TResult Function(ContactDeleted value) contactDeleted,
     required TResult Function(ContactSelected value) contactSelected,
+    required TResult Function(ContactsSearched value) contactsSearched,
   }) {
     return contactAdded(this);
   }
@@ -355,6 +371,7 @@ class _$ContactAddedImpl implements ContactAdded {
     TResult? Function(ContactUpdated value)? contactUpdated,
     TResult? Function(ContactDeleted value)? contactDeleted,
     TResult? Function(ContactSelected value)? contactSelected,
+    TResult? Function(ContactsSearched value)? contactsSearched,
   }) {
     return contactAdded?.call(this);
   }
@@ -367,6 +384,7 @@ class _$ContactAddedImpl implements ContactAdded {
     TResult Function(ContactUpdated value)? contactUpdated,
     TResult Function(ContactDeleted value)? contactDeleted,
     TResult Function(ContactSelected value)? contactSelected,
+    TResult Function(ContactsSearched value)? contactsSearched,
     required TResult orElse(),
   }) {
     if (contactAdded != null) {
@@ -474,6 +492,7 @@ class _$ContactUpdatedImpl implements ContactUpdated {
     required TResult Function(Contact contact) contactUpdated,
     required TResult Function(int id) contactDeleted,
     required TResult Function(Contact contact) contactSelected,
+    required TResult Function(String query) contactsSearched,
   }) {
     return contactUpdated(contact);
   }
@@ -486,6 +505,7 @@ class _$ContactUpdatedImpl implements ContactUpdated {
     TResult? Function(Contact contact)? contactUpdated,
     TResult? Function(int id)? contactDeleted,
     TResult? Function(Contact contact)? contactSelected,
+    TResult? Function(String query)? contactsSearched,
   }) {
     return contactUpdated?.call(contact);
   }
@@ -498,6 +518,7 @@ class _$ContactUpdatedImpl implements ContactUpdated {
     TResult Function(Contact contact)? contactUpdated,
     TResult Function(int id)? contactDeleted,
     TResult Function(Contact contact)? contactSelected,
+    TResult Function(String query)? contactsSearched,
     required TResult orElse(),
   }) {
     if (contactUpdated != null) {
@@ -514,6 +535,7 @@ class _$ContactUpdatedImpl implements ContactUpdated {
     required TResult Function(ContactUpdated value) contactUpdated,
     required TResult Function(ContactDeleted value) contactDeleted,
     required TResult Function(ContactSelected value) contactSelected,
+    required TResult Function(ContactsSearched value) contactsSearched,
   }) {
     return contactUpdated(this);
   }
@@ -526,6 +548,7 @@ class _$ContactUpdatedImpl implements ContactUpdated {
     TResult? Function(ContactUpdated value)? contactUpdated,
     TResult? Function(ContactDeleted value)? contactDeleted,
     TResult? Function(ContactSelected value)? contactSelected,
+    TResult? Function(ContactsSearched value)? contactsSearched,
   }) {
     return contactUpdated?.call(this);
   }
@@ -538,6 +561,7 @@ class _$ContactUpdatedImpl implements ContactUpdated {
     TResult Function(ContactUpdated value)? contactUpdated,
     TResult Function(ContactDeleted value)? contactDeleted,
     TResult Function(ContactSelected value)? contactSelected,
+    TResult Function(ContactsSearched value)? contactsSearched,
     required TResult orElse(),
   }) {
     if (contactUpdated != null) {
@@ -633,6 +657,7 @@ class _$ContactDeletedImpl implements ContactDeleted {
     required TResult Function(Contact contact) contactUpdated,
     required TResult Function(int id) contactDeleted,
     required TResult Function(Contact contact) contactSelected,
+    required TResult Function(String query) contactsSearched,
   }) {
     return contactDeleted(id);
   }
@@ -645,6 +670,7 @@ class _$ContactDeletedImpl implements ContactDeleted {
     TResult? Function(Contact contact)? contactUpdated,
     TResult? Function(int id)? contactDeleted,
     TResult? Function(Contact contact)? contactSelected,
+    TResult? Function(String query)? contactsSearched,
   }) {
     return contactDeleted?.call(id);
   }
@@ -657,6 +683,7 @@ class _$ContactDeletedImpl implements ContactDeleted {
     TResult Function(Contact contact)? contactUpdated,
     TResult Function(int id)? contactDeleted,
     TResult Function(Contact contact)? contactSelected,
+    TResult Function(String query)? contactsSearched,
     required TResult orElse(),
   }) {
     if (contactDeleted != null) {
@@ -673,6 +700,7 @@ class _$ContactDeletedImpl implements ContactDeleted {
     required TResult Function(ContactUpdated value) contactUpdated,
     required TResult Function(ContactDeleted value) contactDeleted,
     required TResult Function(ContactSelected value) contactSelected,
+    required TResult Function(ContactsSearched value) contactsSearched,
   }) {
     return contactDeleted(this);
   }
@@ -685,6 +713,7 @@ class _$ContactDeletedImpl implements ContactDeleted {
     TResult? Function(ContactUpdated value)? contactUpdated,
     TResult? Function(ContactDeleted value)? contactDeleted,
     TResult? Function(ContactSelected value)? contactSelected,
+    TResult? Function(ContactsSearched value)? contactsSearched,
   }) {
     return contactDeleted?.call(this);
   }
@@ -697,6 +726,7 @@ class _$ContactDeletedImpl implements ContactDeleted {
     TResult Function(ContactUpdated value)? contactUpdated,
     TResult Function(ContactDeleted value)? contactDeleted,
     TResult Function(ContactSelected value)? contactSelected,
+    TResult Function(ContactsSearched value)? contactsSearched,
     required TResult orElse(),
   }) {
     if (contactDeleted != null) {
@@ -804,6 +834,7 @@ class _$ContactSelectedImpl implements ContactSelected {
     required TResult Function(Contact contact) contactUpdated,
     required TResult Function(int id) contactDeleted,
     required TResult Function(Contact contact) contactSelected,
+    required TResult Function(String query) contactsSearched,
   }) {
     return contactSelected(contact);
   }
@@ -816,6 +847,7 @@ class _$ContactSelectedImpl implements ContactSelected {
     TResult? Function(Contact contact)? contactUpdated,
     TResult? Function(int id)? contactDeleted,
     TResult? Function(Contact contact)? contactSelected,
+    TResult? Function(String query)? contactsSearched,
   }) {
     return contactSelected?.call(contact);
   }
@@ -828,6 +860,7 @@ class _$ContactSelectedImpl implements ContactSelected {
     TResult Function(Contact contact)? contactUpdated,
     TResult Function(int id)? contactDeleted,
     TResult Function(Contact contact)? contactSelected,
+    TResult Function(String query)? contactsSearched,
     required TResult orElse(),
   }) {
     if (contactSelected != null) {
@@ -844,6 +877,7 @@ class _$ContactSelectedImpl implements ContactSelected {
     required TResult Function(ContactUpdated value) contactUpdated,
     required TResult Function(ContactDeleted value) contactDeleted,
     required TResult Function(ContactSelected value) contactSelected,
+    required TResult Function(ContactsSearched value) contactsSearched,
   }) {
     return contactSelected(this);
   }
@@ -856,6 +890,7 @@ class _$ContactSelectedImpl implements ContactSelected {
     TResult? Function(ContactUpdated value)? contactUpdated,
     TResult? Function(ContactDeleted value)? contactDeleted,
     TResult? Function(ContactSelected value)? contactSelected,
+    TResult? Function(ContactsSearched value)? contactsSearched,
   }) {
     return contactSelected?.call(this);
   }
@@ -868,6 +903,7 @@ class _$ContactSelectedImpl implements ContactSelected {
     TResult Function(ContactUpdated value)? contactUpdated,
     TResult Function(ContactDeleted value)? contactDeleted,
     TResult Function(ContactSelected value)? contactSelected,
+    TResult Function(ContactsSearched value)? contactsSearched,
     required TResult orElse(),
   }) {
     if (contactSelected != null) {
@@ -886,6 +922,171 @@ abstract class ContactSelected implements ContactEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ContactSelectedImplCopyWith<_$ContactSelectedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ContactsSearchedImplCopyWith<$Res> {
+  factory _$$ContactsSearchedImplCopyWith(_$ContactsSearchedImpl value,
+          $Res Function(_$ContactsSearchedImpl) then) =
+      __$$ContactsSearchedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String query});
+}
+
+/// @nodoc
+class __$$ContactsSearchedImplCopyWithImpl<$Res>
+    extends _$ContactEventCopyWithImpl<$Res, _$ContactsSearchedImpl>
+    implements _$$ContactsSearchedImplCopyWith<$Res> {
+  __$$ContactsSearchedImplCopyWithImpl(_$ContactsSearchedImpl _value,
+      $Res Function(_$ContactsSearchedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ContactEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? query = null,
+  }) {
+    return _then(_$ContactsSearchedImpl(
+      null == query
+          ? _value.query
+          : query // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ContactsSearchedImpl implements ContactsSearched {
+  const _$ContactsSearchedImpl(this.query);
+
+  @override
+  final String query;
+
+  @override
+  String toString() {
+    return 'ContactEvent.contactsSearched(query: $query)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ContactsSearchedImpl &&
+            (identical(other.query, query) || other.query == query));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, query);
+
+  /// Create a copy of ContactEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ContactsSearchedImplCopyWith<_$ContactsSearchedImpl> get copyWith =>
+      __$$ContactsSearchedImplCopyWithImpl<_$ContactsSearchedImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() contactsLoaded,
+    required TResult Function(Contact contact) contactAdded,
+    required TResult Function(Contact contact) contactUpdated,
+    required TResult Function(int id) contactDeleted,
+    required TResult Function(Contact contact) contactSelected,
+    required TResult Function(String query) contactsSearched,
+  }) {
+    return contactsSearched(query);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? contactsLoaded,
+    TResult? Function(Contact contact)? contactAdded,
+    TResult? Function(Contact contact)? contactUpdated,
+    TResult? Function(int id)? contactDeleted,
+    TResult? Function(Contact contact)? contactSelected,
+    TResult? Function(String query)? contactsSearched,
+  }) {
+    return contactsSearched?.call(query);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? contactsLoaded,
+    TResult Function(Contact contact)? contactAdded,
+    TResult Function(Contact contact)? contactUpdated,
+    TResult Function(int id)? contactDeleted,
+    TResult Function(Contact contact)? contactSelected,
+    TResult Function(String query)? contactsSearched,
+    required TResult orElse(),
+  }) {
+    if (contactsSearched != null) {
+      return contactsSearched(query);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ContactsLoaded value) contactsLoaded,
+    required TResult Function(ContactAdded value) contactAdded,
+    required TResult Function(ContactUpdated value) contactUpdated,
+    required TResult Function(ContactDeleted value) contactDeleted,
+    required TResult Function(ContactSelected value) contactSelected,
+    required TResult Function(ContactsSearched value) contactsSearched,
+  }) {
+    return contactsSearched(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ContactsLoaded value)? contactsLoaded,
+    TResult? Function(ContactAdded value)? contactAdded,
+    TResult? Function(ContactUpdated value)? contactUpdated,
+    TResult? Function(ContactDeleted value)? contactDeleted,
+    TResult? Function(ContactSelected value)? contactSelected,
+    TResult? Function(ContactsSearched value)? contactsSearched,
+  }) {
+    return contactsSearched?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ContactsLoaded value)? contactsLoaded,
+    TResult Function(ContactAdded value)? contactAdded,
+    TResult Function(ContactUpdated value)? contactUpdated,
+    TResult Function(ContactDeleted value)? contactDeleted,
+    TResult Function(ContactSelected value)? contactSelected,
+    TResult Function(ContactsSearched value)? contactsSearched,
+    required TResult orElse(),
+  }) {
+    if (contactsSearched != null) {
+      return contactsSearched(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ContactsSearched implements ContactEvent {
+  const factory ContactsSearched(final String query) = _$ContactsSearchedImpl;
+
+  String get query;
+
+  /// Create a copy of ContactEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ContactsSearchedImplCopyWith<_$ContactsSearchedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import '../../domain/entities/entities.dart';
+import 'phone_number_field.dart';
+import 'address_form.dart';
 
 class ContactForm extends StatefulWidget {
   final Contact? initialContact;
@@ -21,12 +23,9 @@ class _ContactFormState extends State<ContactForm> {
 
   late final TextEditingController _firstNameController;
   late final TextEditingController _lastNameController;
-  late final TextEditingController _phoneNumberController;
-  late final TextEditingController _streetAddress1Controller;
-  late final TextEditingController _streetAddress2Controller;
-  late final TextEditingController _cityController;
-  late final TextEditingController _stateController;
-  late final TextEditingController _zipCodeController;
+
+  late List<TextEditingController> _phoneNumberControllers;
+  late List<AddressFormState> _addressForms;
 
   final logger = Logger();
 
@@ -34,29 +33,57 @@ class _ContactFormState extends State<ContactForm> {
   void initState() {
     super.initState();
     final contact = widget.initialContact;
+
     _firstNameController = TextEditingController(text: contact?.firstName);
     _lastNameController = TextEditingController(text: contact?.lastName);
-    _phoneNumberController = TextEditingController(text: contact?.phoneNumber);
-    _streetAddress1Controller =
-        TextEditingController(text: contact?.streetAddress1);
-    _streetAddress2Controller =
-        TextEditingController(text: contact?.streetAddress2);
-    _cityController = TextEditingController(text: contact?.city);
-    _stateController = TextEditingController(text: contact?.state);
-    _zipCodeController = TextEditingController(text: contact?.zipCode);
+
+    _phoneNumberControllers = contact?.phoneNumbers.map((phone) {
+          return TextEditingController(text: phone);
+        }).toList() ??
+        [TextEditingController()];
+
+    _addressForms = contact?.addresses.map((address) {
+          return AddressFormState(address: address);
+        }).toList() ??
+        [AddressFormState()];
   }
 
   @override
   void dispose() {
     _firstNameController.dispose();
     _lastNameController.dispose();
-    _phoneNumberController.dispose();
-    _streetAddress1Controller.dispose();
-    _streetAddress2Controller.dispose();
-    _cityController.dispose();
-    _stateController.dispose();
-    _zipCodeController.dispose();
+    for (var controller in _phoneNumberControllers) {
+      controller.dispose();
+    }
+    for (var form in _addressForms) {
+      form.dispose();
+    }
     super.dispose();
+  }
+
+  void _addPhoneNumberField() {
+    setState(() {
+      _phoneNumberControllers.add(TextEditingController());
+    });
+  }
+
+  void _removePhoneNumberField(int index) {
+    setState(() {
+      _phoneNumberControllers[index].dispose();
+      _phoneNumberControllers.removeAt(index);
+    });
+  }
+
+  void _addAddressForm() {
+    setState(() {
+      _addressForms.add(AddressFormState());
+    });
+  }
+
+  void _removeAddressForm(int index) {
+    setState(() {
+      _addressForms.removeAt(index);
+    });
   }
 
   void _saveForm() {
@@ -67,12 +94,10 @@ class _ContactFormState extends State<ContactForm> {
             DateTime.now().millisecondsSinceEpoch.toString(),
         firstName: _firstNameController.text,
         lastName: _lastNameController.text,
-        phoneNumber: _phoneNumberController.text,
-        streetAddress1: _streetAddress1Controller.text,
-        streetAddress2: _streetAddress2Controller.text,
-        city: _cityController.text,
-        state: _stateController.text,
-        zipCode: _zipCodeController.text,
+        phoneNumbers: _phoneNumberControllers
+            .map((controller) => controller.text)
+            .toList(),
+        addresses: _addressForms.map((form) => form.toAddress()).toList(),
       );
       widget.onSave(newContact);
     }
@@ -105,35 +130,44 @@ class _ContactFormState extends State<ContactForm> {
               return null;
             },
           ),
-          TextFormField(
-            controller: _phoneNumberController,
-            decoration: const InputDecoration(labelText: 'Phone Number'),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter a phone number';
-              }
-              return null;
-            },
+          const SizedBox(height: 16),
+          const Text('Phone Numbers',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          ..._phoneNumberControllers.asMap().entries.map((entry) {
+            final index = entry.key;
+            final controller = entry.value;
+            return PhoneNumberField(
+              controller: controller,
+              index: index,
+              onRemove: () => _removePhoneNumberField(index),
+            );
+          }),
+          TextButton.icon(
+            onPressed: _addPhoneNumberField,
+            icon: const Icon(Icons.add),
+            label: const Text('Add Phone Number'),
           ),
-          TextFormField(
-            controller: _streetAddress1Controller,
-            decoration: const InputDecoration(labelText: 'Street Address 1'),
-          ),
-          TextFormField(
-            controller: _streetAddress2Controller,
-            decoration: const InputDecoration(labelText: 'Street Address 2'),
-          ),
-          TextFormField(
-            controller: _cityController,
-            decoration: const InputDecoration(labelText: 'City'),
-          ),
-          TextFormField(
-            controller: _stateController,
-            decoration: const InputDecoration(labelText: 'State'),
-          ),
-          TextFormField(
-            controller: _zipCodeController,
-            decoration: const InputDecoration(labelText: 'Zip Code'),
+          const SizedBox(height: 16),
+          const Text('Addresses',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          ..._addressForms.asMap().entries.map((entry) {
+            final index = entry.key;
+            final form = entry.value;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                form.build(context),
+                IconButton(
+                  icon: const Icon(Icons.remove_circle_outline),
+                  onPressed: () => _removeAddressForm(index),
+                ),
+              ],
+            );
+          }),
+          TextButton.icon(
+            onPressed: _addAddressForm,
+            icon: const Icon(Icons.add),
+            label: const Text('Add Address'),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),

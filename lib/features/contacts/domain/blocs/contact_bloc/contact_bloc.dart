@@ -1,5 +1,8 @@
+// ignore: depend_on_referenced_packages
+import 'package:stream_transform/stream_transform.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../../entities/entities.dart';
 import '../../repositories/repositories.dart';
 
@@ -16,6 +19,8 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
     on<ContactUpdated>(_onUpdateContact);
     on<ContactDeleted>(_onDeleteContact);
     on<ContactSelected>(_onSelectContact);
+    on<ContactsSearched>(_onSearchContacts,
+        transformer: debounce(const Duration(milliseconds: 300)));
   }
 
   Future<void> _onLoadContacts(
@@ -77,6 +82,21 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
 
   Future<void> _onSelectContact(
       ContactSelected event, Emitter<ContactState> emit) async {
-      emit(state.copyWith(contact: event.contact));
+    emit(state.copyWith(contact: event.contact));
+  }
+
+  Future<void> _onSearchContacts(
+      ContactsSearched event, Emitter<ContactState> emit) async {
+    emit(state.copyWith(isLoading: true, errorMessage: null, contact: null));
+    try {
+      final searchResults = await contactRepository.searchContacts(event.query);
+      emit(state.copyWith(contacts: searchResults, isLoading: false));
+    } catch (error) {
+      emit(state.copyWith(isLoading: false, errorMessage: error.toString()));
+    }
+  }
+
+  EventTransformer<E> debounce<E>(Duration duration) {
+    return (events, mapper) => events.debounce(duration).switchMap(mapper);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'address.dart';
 
 part 'contact.freezed.dart';
 part 'contact.g.dart';
@@ -10,12 +11,8 @@ class Contact with _$Contact {
     required String contactID,
     required String firstName,
     required String lastName,
-    required String phoneNumber,
-    required String streetAddress1,
-    required String streetAddress2,
-    required String city,
-    required String state,
-    required String zipCode,
+    required List<String> phoneNumbers, // Updated to support multiple phone numbers
+    required List<Address> addresses,   // Updated to support multiple addresses
   }) = _Contact;
 
   factory Contact.fromJson(Map<String, dynamic> json) =>

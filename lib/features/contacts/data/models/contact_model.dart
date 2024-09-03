@@ -1,35 +1,41 @@
 import 'package:objectbox/objectbox.dart';
 import 'package:uuid/uuid.dart';
 import '../../domain/entities/contact.dart';
+import 'address_model.dart';
 
 @Entity()
 class ContactModel {
   @Id()
   int id;
+
   @Unique()
   @Index()
   String contactID;
+
   String firstName;
   String lastName;
-  String phoneNumber;
-  String streetAddress1;
-  String streetAddress2;
-  String city;
-  String state;
-  String zipCode;
+
+  // Store phone numbers as a single comma-separated string
+  String phoneNumbers;
+
+  @Backlink()
+  final addresses = ToMany<AddressModel>();
 
   ContactModel({
     this.id = 0,
     String? contactID,
     required this.firstName,
     required this.lastName,
-    required this.phoneNumber,
-    required this.streetAddress1,
-    required this.streetAddress2,
-    required this.city,
-    required this.state,
-    required this.zipCode,
-  }) : contactID = contactID ?? const Uuid().v4();
+    required this.phoneNumbers,
+    List<AddressModel>? addresses,
+  }) : contactID = contactID ?? const Uuid().v4() {
+    if (addresses != null) {
+      this.addresses.addAll(addresses);
+    }
+  }
+
+  // Helper method to convert the stored string back into a list of phone numbers
+  List<String> getPhoneNumbers() => phoneNumbers.split(',');
 
   Contact toEntity() {
     return Contact(
@@ -37,12 +43,9 @@ class ContactModel {
       contactID: contactID,
       firstName: firstName,
       lastName: lastName,
-      phoneNumber: phoneNumber,
-      streetAddress1: streetAddress1,
-      streetAddress2: streetAddress2,
-      city: city,
-      state: state,
-      zipCode: zipCode,
+      phoneNumbers: getPhoneNumbers(),
+      addresses:
+          addresses.map((addressModel) => addressModel.toEntity()).toList(),
     );
   }
 
@@ -52,12 +55,11 @@ class ContactModel {
       contactID: contact.contactID,
       firstName: contact.firstName,
       lastName: contact.lastName,
-      phoneNumber: contact.phoneNumber,
-      streetAddress1: contact.streetAddress1,
-      streetAddress2: contact.streetAddress2,
-      city: contact.city,
-      state: contact.state,
-      zipCode: contact.zipCode,
+      phoneNumbers:
+          contact.phoneNumbers.join(','),
+      addresses: contact.addresses
+          .map((address) => AddressModel.fromEntity(address))
+          .toList(),
     );
   }
 }

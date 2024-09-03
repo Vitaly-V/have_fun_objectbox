@@ -33,4 +33,14 @@ class ContactDataSource {
   bool isEmpty() {
     return _contactBox.isEmpty();
   }
+
+  Future<List<ContactModel>> searchContacts(String query) async {
+    final lowerCaseQuery = query.toLowerCase();
+
+    final queryBuilder = _contactBox.query(ContactModel_.firstName
+            .contains(lowerCaseQuery, caseSensitive: false) |
+        ContactModel_.lastName.contains(lowerCaseQuery, caseSensitive: false));
+
+    return queryBuilder.build().find();
+  }
 }

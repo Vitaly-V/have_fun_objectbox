@@ -15,7 +15,9 @@ class ContactListTile extends StatelessWidget {
     return ListTile(
       leading: const Icon(Icons.person),
       title: Text('${contact.firstName} ${contact.lastName}'),
-      subtitle: Text(contact.phoneNumber),
+      subtitle: Text(contact.phoneNumbers.isNotEmpty
+          ? contact.phoneNumbers.first
+          : 'No phone number'),
       onTap: () {
         if (context.read<ContactBloc>().state.contact == contact) {
           context.goNamed(AppRoute.contact.name);

@@ -24,12 +24,9 @@ mixin _$Contact {
   String get contactID => throw _privateConstructorUsedError;
   String get firstName => throw _privateConstructorUsedError;
   String get lastName => throw _privateConstructorUsedError;
-  String get phoneNumber => throw _privateConstructorUsedError;
-  String get streetAddress1 => throw _privateConstructorUsedError;
-  String get streetAddress2 => throw _privateConstructorUsedError;
-  String get city => throw _privateConstructorUsedError;
-  String get state => throw _privateConstructorUsedError;
-  String get zipCode => throw _privateConstructorUsedError;
+  List<String> get phoneNumbers =>
+      throw _privateConstructorUsedError; // Updated to support multiple phone numbers
+  List<Address> get addresses => throw _privateConstructorUsedError;
 
   /// Serializes this Contact to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -50,12 +47,8 @@ abstract class $ContactCopyWith<$Res> {
       String contactID,
       String firstName,
       String lastName,
-      String phoneNumber,
-      String streetAddress1,
-      String streetAddress2,
-      String city,
-      String state,
-      String zipCode});
+      List<String> phoneNumbers,
+      List<Address> addresses});
 }
 
 /// @nodoc
@@ -77,12 +70,8 @@ class _$ContactCopyWithImpl<$Res, $Val extends Contact>
     Object? contactID = null,
     Object? firstName = null,
     Object? lastName = null,
-    Object? phoneNumber = null,
-    Object? streetAddress1 = null,
-    Object? streetAddress2 = null,
-    Object? city = null,
-    Object? state = null,
-    Object? zipCode = null,
+    Object? phoneNumbers = null,
+    Object? addresses = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -101,30 +90,14 @@ class _$ContactCopyWithImpl<$Res, $Val extends Contact>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      phoneNumber: null == phoneNumber
-          ? _value.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      streetAddress1: null == streetAddress1
-          ? _value.streetAddress1
-          : streetAddress1 // ignore: cast_nullable_to_non_nullable
-              as String,
-      streetAddress2: null == streetAddress2
-          ? _value.streetAddress2
-          : streetAddress2 // ignore: cast_nullable_to_non_nullable
-              as String,
-      city: null == city
-          ? _value.city
-          : city // ignore: cast_nullable_to_non_nullable
-              as String,
-      state: null == state
-          ? _value.state
-          : state // ignore: cast_nullable_to_non_nullable
-              as String,
-      zipCode: null == zipCode
-          ? _value.zipCode
-          : zipCode // ignore: cast_nullable_to_non_nullable
-              as String,
+      phoneNumbers: null == phoneNumbers
+          ? _value.phoneNumbers
+          : phoneNumbers // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      addresses: null == addresses
+          ? _value.addresses
+          : addresses // ignore: cast_nullable_to_non_nullable
+              as List<Address>,
     ) as $Val);
   }
 }
@@ -141,12 +114,8 @@ abstract class _$$ContactImplCopyWith<$Res> implements $ContactCopyWith<$Res> {
       String contactID,
       String firstName,
       String lastName,
-      String phoneNumber,
-      String streetAddress1,
-      String streetAddress2,
-      String city,
-      String state,
-      String zipCode});
+      List<String> phoneNumbers,
+      List<Address> addresses});
 }
 
 /// @nodoc
@@ -166,12 +135,8 @@ class __$$ContactImplCopyWithImpl<$Res>
     Object? contactID = null,
     Object? firstName = null,
     Object? lastName = null,
-    Object? phoneNumber = null,
-    Object? streetAddress1 = null,
-    Object? streetAddress2 = null,
-    Object? city = null,
-    Object? state = null,
-    Object? zipCode = null,
+    Object? phoneNumbers = null,
+    Object? addresses = null,
   }) {
     return _then(_$ContactImpl(
       id: freezed == id
@@ -190,30 +155,14 @@ class __$$ContactImplCopyWithImpl<$Res>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      phoneNumber: null == phoneNumber
-          ? _value.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      streetAddress1: null == streetAddress1
-          ? _value.streetAddress1
-          : streetAddress1 // ignore: cast_nullable_to_non_nullable
-              as String,
-      streetAddress2: null == streetAddress2
-          ? _value.streetAddress2
-          : streetAddress2 // ignore: cast_nullable_to_non_nullable
-              as String,
-      city: null == city
-          ? _value.city
-          : city // ignore: cast_nullable_to_non_nullable
-              as String,
-      state: null == state
-          ? _value.state
-          : state // ignore: cast_nullable_to_non_nullable
-              as String,
-      zipCode: null == zipCode
-          ? _value.zipCode
-          : zipCode // ignore: cast_nullable_to_non_nullable
-              as String,
+      phoneNumbers: null == phoneNumbers
+          ? _value._phoneNumbers
+          : phoneNumbers // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      addresses: null == addresses
+          ? _value._addresses
+          : addresses // ignore: cast_nullable_to_non_nullable
+              as List<Address>,
     ));
   }
 }
@@ -226,12 +175,10 @@ class _$ContactImpl implements _Contact {
       required this.contactID,
       required this.firstName,
       required this.lastName,
-      required this.phoneNumber,
-      required this.streetAddress1,
-      required this.streetAddress2,
-      required this.city,
-      required this.state,
-      required this.zipCode});
+      required final List<String> phoneNumbers,
+      required final List<Address> addresses})
+      : _phoneNumbers = phoneNumbers,
+        _addresses = addresses;
 
   factory _$ContactImpl.fromJson(Map<String, dynamic> json) =>
       _$$ContactImplFromJson(json);
@@ -244,22 +191,27 @@ class _$ContactImpl implements _Contact {
   final String firstName;
   @override
   final String lastName;
+  final List<String> _phoneNumbers;
   @override
-  final String phoneNumber;
+  List<String> get phoneNumbers {
+    if (_phoneNumbers is EqualUnmodifiableListView) return _phoneNumbers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_phoneNumbers);
+  }
+
+// Updated to support multiple phone numbers
+  final List<Address> _addresses;
+// Updated to support multiple phone numbers
   @override
-  final String streetAddress1;
-  @override
-  final String streetAddress2;
-  @override
-  final String city;
-  @override
-  final String state;
-  @override
-  final String zipCode;
+  List<Address> get addresses {
+    if (_addresses is EqualUnmodifiableListView) return _addresses;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_addresses);
+  }
 
   @override
   String toString() {
-    return 'Contact(id: $id, contactID: $contactID, firstName: $firstName, lastName: $lastName, phoneNumber: $phoneNumber, streetAddress1: $streetAddress1, streetAddress2: $streetAddress2, city: $city, state: $state, zipCode: $zipCode)';
+    return 'Contact(id: $id, contactID: $contactID, firstName: $firstName, lastName: $lastName, phoneNumbers: $phoneNumbers, addresses: $addresses)';
   }
 
   @override
@@ -274,15 +226,10 @@ class _$ContactImpl implements _Contact {
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
-            (identical(other.phoneNumber, phoneNumber) ||
-                other.phoneNumber == phoneNumber) &&
-            (identical(other.streetAddress1, streetAddress1) ||
-                other.streetAddress1 == streetAddress1) &&
-            (identical(other.streetAddress2, streetAddress2) ||
-                other.streetAddress2 == streetAddress2) &&
-            (identical(other.city, city) || other.city == city) &&
-            (identical(other.state, state) || other.state == state) &&
-            (identical(other.zipCode, zipCode) || other.zipCode == zipCode));
+            const DeepCollectionEquality()
+                .equals(other._phoneNumbers, _phoneNumbers) &&
+            const DeepCollectionEquality()
+                .equals(other._addresses, _addresses));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -293,12 +240,8 @@ class _$ContactImpl implements _Contact {
       contactID,
       firstName,
       lastName,
-      phoneNumber,
-      streetAddress1,
-      streetAddress2,
-      city,
-      state,
-      zipCode);
+      const DeepCollectionEquality().hash(_phoneNumbers),
+      const DeepCollectionEquality().hash(_addresses));
 
   /// Create a copy of Contact
   /// with the given fields replaced by the non-null parameter values.
@@ -322,12 +265,8 @@ abstract class _Contact implements Contact {
       required final String contactID,
       required final String firstName,
       required final String lastName,
-      required final String phoneNumber,
-      required final String streetAddress1,
-      required final String streetAddress2,
-      required final String city,
-      required final String state,
-      required final String zipCode}) = _$ContactImpl;
+      required final List<String> phoneNumbers,
+      required final List<Address> addresses}) = _$ContactImpl;
 
   factory _Contact.fromJson(Map<String, dynamic> json) = _$ContactImpl.fromJson;
 
@@ -340,17 +279,9 @@ abstract class _Contact implements Contact {
   @override
   String get lastName;
   @override
-  String get phoneNumber;
+  List<String> get phoneNumbers; // Updated to support multiple phone numbers
   @override
-  String get streetAddress1;
-  @override
-  String get streetAddress2;
-  @override
-  String get city;
-  @override
-  String get state;
-  @override
-  String get zipCode;
+  List<Address> get addresses;
 
   /// Create a copy of Contact
   /// with the given fields replaced by the non-null parameter values.

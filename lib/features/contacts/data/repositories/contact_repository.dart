@@ -54,19 +54,51 @@ class ContactRepository implements ContactRepositoryInterface {
     final List<dynamic> jsonData = jsonDecode(jsonString);
 
     final List<Contact> contacts = jsonData.map((contactJson) {
+      // Parse phone numbers
+      List<String> phoneNumbers = [];
+      if (contactJson['phoneNumbers'] != null) {
+        phoneNumbers = List<String>.from(contactJson['phoneNumbers']);
+      } else if (contactJson['phoneNumber'] != null) {
+        phoneNumbers = [contactJson['phoneNumber']];
+      }
+
+      // Parse addresses
+      List<Address> addresses = [];
+      if (contactJson['addresses'] != null) {
+        addresses = (contactJson['addresses'] as List<dynamic>)
+            .map((addressJson) =>
+                Address.fromJson(addressJson as Map<String, dynamic>))
+            .toList();
+      } else {
+        // Handle cases where addresses are not provided in the new structure
+        addresses = [
+          Address(
+            streetAddress1: contactJson['streetAddress1'] as String,
+            streetAddress2: contactJson['streetAddress2'] as String,
+            city: contactJson['city'] as String,
+            state: contactJson['state'] as String,
+            zipCode: contactJson['zipCode'] as String,
+          )
+        ];
+      }
+
+      // Create a Contact object with the transformed phoneNumbers and addresses
       return Contact(
-        contactID: contactJson['contactID'],
-        firstName: contactJson['firstName'],
-        lastName: contactJson['lastName'],
-        phoneNumber: contactJson['phoneNumber'],
-        streetAddress1: contactJson['streetAddress1'],
-        streetAddress2: contactJson['streetAddress2'],
-        city: contactJson['city'],
-        state: contactJson['state'],
-        zipCode: contactJson['zipCode'],
+        id: contactJson['id'] as int?,
+        contactID: contactJson['contactID'] as String,
+        firstName: contactJson['firstName'] as String,
+        lastName: contactJson['lastName'] as String,
+        phoneNumbers: phoneNumbers,
+        addresses: addresses,
       );
     }).toList();
 
     await addContacts(contacts);
+  }
+
+  @override
+  Future<List<Contact>> searchContacts(String query) async {
+    final contactModels = await dataSource.searchContacts(query);
+    return contactModels.map((model) => model.toEntity()).toList();
   }
 }

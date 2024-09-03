@@ -8,4 +8,5 @@ abstract class ContactRepositoryInterface {
   Future<void> deleteContact(int id);
   bool isEmpty();
   Future<void> importContactsIfFirstLaunch();
+  Future<List<Contact>> searchContacts(String query);
 }

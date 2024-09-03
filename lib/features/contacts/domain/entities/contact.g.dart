@@ -12,12 +12,12 @@ _$ContactImpl _$$ContactImplFromJson(Map<String, dynamic> json) =>
       contactID: json['contactID'] as String,
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
-      phoneNumber: json['phoneNumber'] as String,
-      streetAddress1: json['streetAddress1'] as String,
-      streetAddress2: json['streetAddress2'] as String,
-      city: json['city'] as String,
-      state: json['state'] as String,
-      zipCode: json['zipCode'] as String,
+      phoneNumbers: (json['phoneNumbers'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
+      addresses: (json['addresses'] as List<dynamic>)
+          .map((e) => Address.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$ContactImplToJson(_$ContactImpl instance) =>
@@ -26,10 +26,6 @@ Map<String, dynamic> _$$ContactImplToJson(_$ContactImpl instance) =>
       'contactID': instance.contactID,
       'firstName': instance.firstName,
       'lastName': instance.lastName,
-      'phoneNumber': instance.phoneNumber,
-      'streetAddress1': instance.streetAddress1,
-      'streetAddress2': instance.streetAddress2,
-      'city': instance.city,
-      'state': instance.state,
-      'zipCode': instance.zipCode,
+      'phoneNumbers': instance.phoneNumbers,
+      'addresses': instance.addresses,
     };

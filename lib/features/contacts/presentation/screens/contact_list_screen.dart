@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/config/app_router.dart';
-import '../../domain/blocs/blocs.dart';
+import '../../../../core/core.dart';
+import '../../domain/domain.dart';
 import '../widgets/contact_list_tile.dart';
 
 class ContactListScreen extends StatelessWidget {
@@ -12,11 +12,35 @@ class ContactListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Contacts')),
+      appBar: AppBar(
+        title: const Text('Contacts'),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(48.0),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+            child: TextField(
+              autocorrect: false,
+              onChanged: (query) {
+                context.read<ContactBloc>().add(ContactsSearched(query));
+              },
+              decoration: InputDecoration(
+                hintText: 'Search contacts...',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: Colors.white,
+                prefixIcon: const Icon(Icons.search),
+              ),
+            ),
+          ),
+        ),
+      ),
       body: BlocConsumer<ContactBloc, ContactState>(
         listener: (context, state) {
           if (state.contact != null) {
-            context.goNamed(AppRoute.contact.name);
+            context.pushNamed(AppRoute.contact.name);
           }
         },
         builder: (context, state) {
@@ -27,6 +51,7 @@ class ContactListScreen extends StatelessWidget {
           } else if (state.contacts.isEmpty) {
             return const Center(child: Text('No contacts found.'));
           }
+
           return ListView.builder(
             itemCount: state.contacts.length,
             itemBuilder: (context, index) {
