@@ -1,0 +1,112 @@
+[
+    {
+        "contactID": "1a2b3c4d",
+        "firstName": "John",
+        "lastName": "Doe",
+        "phoneNumber": "123-456-7890",
+        "streetAddress1": "123 Main St",
+        "streetAddress2": "",
+        "city": "Springfield",
+        "state": "IL",
+        "zipCode": "62701"
+    },
+    {
+        "contactID": "2b3c4d5e",
+        "firstName": "Jane",
+        "lastName": "Smith",
+        "phoneNumber": "234-567-8901",
+        "streetAddress1": "456 Elm St",
+        "streetAddress2": "Apt 5B",
+        "city": "Chicago",
+        "state": "IL",
+        "zipCode": "60605"
+    },
+    {
+        "contactID": "3c4d5e6f",
+        "firstName": "Michael",
+        "lastName": "Johnson",
+        "phoneNumber": "345-678-9012",
+        "streetAddress1": "789 Oak St",
+        "streetAddress2": "",
+        "city": "New York",
+        "state": "NY",
+        "zipCode": "10001"
+    },
+    {
+        "contactID": "4d5e6f7g",
+        "firstName": "Emily",
+        "lastName": "Williams",
+        "phoneNumber": "456-789-0123",
+        "streetAddress1": "202 Maple St",
+        "streetAddress2": "",
+        "city": "Boston",
+        "state": "MA",
+        "zipCode": "02101"
+    },
+    {
+        "contactID": "5e6f7g8h",
+        "firstName": "David",
+        "lastName": "Brown",
+        "phoneNumber": "567-890-1234",
+        "streetAddress1": "303 Birch St",
+        "streetAddress2": "",
+        "city": "Miami",
+        "state": "FL",
+        "zipCode": "33101"
+    },
+    {
+        "contactID": "6f7g8h9i",
+        "firstName": "Olivia",
+        "lastName": "Jones",
+        "phoneNumber": "678-901-2345",
+        "streetAddress1": "404 Cedar St",
+        "streetAddress2": "",
+        "city": "Seattle",
+        "state": "WA",
+        "zipCode": "98101"
+    },
+    {
+        "contactID": "7g8h9i0j",
+        "firstName": "William",
+        "lastName": "Garcia",
+        "phoneNumber": "789-012-3456",
+        "streetAddress1": "505 Willow St",
+        "streetAddress2": "",
+        "city": "Houston",
+        "state": "TX",
+        "zipCode": "77001"
+    },
+    {
+        "contactID": "8h9i0j1k",
+        "firstName": "Sophia",
+        "lastName": "Martinez",
+        "phoneNumber": "890-123-4567",
+        "streetAddress1": "606 Aspen St",
+        "streetAddress2": "",
+        "city": "Denver",
+        "state": "CO",
+        "zipCode": "80201"
+    },
+    {
+        "contactID": "9i0j1k2l",
+        "firstName": "James",
+        "lastName": "Rodriguez",
+        "phoneNumber": "901-234-5678",
+        "streetAddress1": "707 Pineapple St",
+        "streetAddress2": "",
+        "city": "Orlando",
+        "state": "FL",
+        "zipCode": "32801"
+    },
+    {
+        "contactID": "0j1k2l3m",
+        "firstName": "Isabella",
+        "lastName": "Davis",
+        "phoneNumber": "012-345-6789",
+        "streetAddress1": "808 Cherry St",
+        "streetAddress2": "",
+        "city": "San Francisco",
+        "state": "CA",
+        "zipCode": "94101"
+    }
+]

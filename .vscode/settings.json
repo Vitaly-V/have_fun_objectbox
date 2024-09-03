@@ -1,0 +1,8 @@
+{
+    "cSpell.words": [
+        "objectbox"
+    ],
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit"
+    },
+}
