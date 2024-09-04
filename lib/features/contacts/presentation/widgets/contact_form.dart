@@ -25,7 +25,7 @@ class _ContactFormState extends State<ContactForm> {
   late final TextEditingController _lastNameController;
 
   late List<TextEditingController> _phoneNumberControllers;
-  late List<AddressFormState> _addressForms;
+  late List<AddressForm> _addressForms;
 
   final logger = Logger();
 
@@ -37,15 +37,17 @@ class _ContactFormState extends State<ContactForm> {
     _firstNameController = TextEditingController(text: contact?.firstName);
     _lastNameController = TextEditingController(text: contact?.lastName);
 
-    _phoneNumberControllers = contact?.phoneNumbers.map((phone) {
-          return TextEditingController(text: phone);
+    // Initialize phone numbers
+    _phoneNumberControllers = contact?.phones.map((phone) {
+          return TextEditingController(text: phone.number);
         }).toList() ??
         [TextEditingController()];
 
+    // Initialize addresses
     _addressForms = contact?.addresses.map((address) {
-          return AddressFormState(address: address);
+          return AddressForm(address: address);
         }).toList() ??
-        [AddressFormState()];
+        [AddressForm()];
   }
 
   @override
@@ -76,7 +78,7 @@ class _ContactFormState extends State<ContactForm> {
 
   void _addAddressForm() {
     setState(() {
-      _addressForms.add(AddressFormState());
+      _addressForms.add(AddressForm());
     });
   }
 
@@ -94,8 +96,8 @@ class _ContactFormState extends State<ContactForm> {
             DateTime.now().millisecondsSinceEpoch.toString(),
         firstName: _firstNameController.text,
         lastName: _lastNameController.text,
-        phoneNumbers: _phoneNumberControllers
-            .map((controller) => controller.text)
+        phones: _phoneNumberControllers
+            .map((controller) => Phone(number: controller.text))
             .toList(),
         addresses: _addressForms.map((form) => form.toAddress()).toList(),
       );

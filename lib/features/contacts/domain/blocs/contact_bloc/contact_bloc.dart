@@ -1,8 +1,9 @@
+import 'package:shared_preferences/shared_preferences.dart';
 // ignore: depend_on_referenced_packages
 import 'package:stream_transform/stream_transform.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
+import '../../../../../core/core.dart';
 import '../../entities/entities.dart';
 import '../../repositories/repositories.dart';
 
@@ -12,6 +13,7 @@ part 'contact_bloc.freezed.dart';
 
 class ContactBloc extends Bloc<ContactEvent, ContactState> {
   final ContactRepositoryInterface contactRepository;
+  static const String dbInitializedKey = 'databaseInitialized';
 
   ContactBloc(this.contactRepository) : super(const ContactState()) {
     on<ContactsLoaded>(_onLoadContacts);
@@ -26,25 +28,36 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
   Future<void> _onLoadContacts(
       ContactsLoaded event, Emitter<ContactState> emit) async {
     emit(state.copyWith(isLoading: true, errorMessage: null));
-    if (contactRepository.isEmpty()) {
-      await contactRepository.importContactsIfFirstLaunch();
-    }
     try {
-      final contacts = await contactRepository.getContacts();
-      emit(state.copyWith(contacts: contacts, isLoading: false));
+      var isDatabaseInitialized = await _isDatabaseInitialized();
+      if (!isDatabaseInitialized) {
+        await contactRepository.importContactsIfFirstLaunch();
+        _setDatabaseInitialized();
+      }
+      final contacts = contactRepository.getContacts(
+          query: state.searchQuery, isAscending: event.isAscending);
+      emit(state.copyWith(
+          contacts: contacts,
+          isLoading: false,
+          isAscending: event.isAscending));
+      AppLogger.logger
+          .i('Contacts loaded and sorted, ascending: ${event.isAscending}');
     } catch (error) {
       emit(state.copyWith(isLoading: false, errorMessage: error.toString()));
+      AppLogger.logger.e('Error loading and sorting contacts: $error');
     }
   }
 
   Future<void> _onAddContact(
       ContactAdded event, Emitter<ContactState> emit) async {
     try {
-      emit(state.copyWith(isLoading: true, errorMessage: null));
-      await contactRepository.addContact(event.contact);
+      emit(state.copyWith(isLoading: true, errorMessage: null, contact: null));
+      contactRepository.addContact(event.contact);
       add(const ContactsLoaded());
+      AppLogger.logger.i('Contact added: ${event.contact}');
     } catch (error) {
       emit(state.copyWith(isLoading: false, errorMessage: error.toString()));
+      AppLogger.logger.e('Error adding contact: $error');
     }
   }
 
@@ -52,17 +65,19 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
       ContactUpdated event, Emitter<ContactState> emit) async {
     try {
       emit(state.copyWith(isLoading: true, errorMessage: null));
-      await contactRepository.updateContact(event.contact);
+      var updatedContact = contactRepository.updateContact(event.contact);
       var updatedContacts = [...state.contacts].map((contact) {
-        if (contact.id == event.contact.id) {
-          return event.contact;
+        if (contact.id == updatedContact.id) {
+          return updatedContact;
         }
         return contact;
       }).toList();
       emit(state.copyWith(
           isLoading: false, contacts: updatedContacts, contact: event.contact));
+      AppLogger.logger.i('Contact updated: ${event.contact}');
     } catch (error) {
       emit(state.copyWith(isLoading: false, errorMessage: error.toString()));
+      AppLogger.logger.e('Error updating contact: $error');
     }
   }
 
@@ -70,33 +85,56 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
       ContactDeleted event, Emitter<ContactState> emit) async {
     try {
       emit(state.copyWith(isLoading: true, errorMessage: null));
-      await contactRepository.deleteContact(event.id);
+      contactRepository.deleteContact(event.id);
       var updatedContacts = [...state.contacts];
       updatedContacts.removeWhere((contact) => contact.id == event.id);
       emit(state.copyWith(
           contacts: updatedContacts, contact: null, isLoading: false));
+      AppLogger.logger.i('Contact deleted: ID ${event.id}');
     } catch (error) {
       emit(state.copyWith(isLoading: false, errorMessage: error.toString()));
+      AppLogger.logger.e('Error deleting contact: $error');
     }
   }
 
   Future<void> _onSelectContact(
       ContactSelected event, Emitter<ContactState> emit) async {
     emit(state.copyWith(contact: event.contact));
+    AppLogger.logger.i(
+        'Contact selected: ${event.contact.firstName} ${event.contact.lastName}');
   }
 
   Future<void> _onSearchContacts(
       ContactsSearched event, Emitter<ContactState> emit) async {
-    emit(state.copyWith(isLoading: true, errorMessage: null, contact: null));
+    emit(state.copyWith(
+        isLoading: true,
+        errorMessage: null,
+        contact: null,
+        searchQuery: event.query));
     try {
-      final searchResults = await contactRepository.searchContacts(event.query);
+      final searchResults = contactRepository.getContacts(
+          query: event.query, isAscending: state.isAscending);
       emit(state.copyWith(contacts: searchResults, isLoading: false));
+      AppLogger.logger.i('Search completed for query: ${event.query}');
     } catch (error) {
       emit(state.copyWith(isLoading: false, errorMessage: error.toString()));
+      AppLogger.logger.e('Error searching contacts: $error');
     }
   }
 
   EventTransformer<E> debounce<E>(Duration duration) {
     return (events, mapper) => events.debounce(duration).switchMap(mapper);
+  }
+
+  // Check if the database has been initialized
+  Future<bool> _isDatabaseInitialized() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(dbInitializedKey) ?? false;
+  }
+
+  // Set the database as initialized
+  Future<void> _setDatabaseInitialized() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(dbInitializedKey, true);
   }
 }

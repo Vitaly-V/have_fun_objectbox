@@ -3,43 +3,68 @@ import '../models/models.dart';
 
 class ContactDataSource {
   final Store store;
-
   late final Box<ContactModel> _contactBox;
 
   ContactDataSource(this.store) {
     _contactBox = store.box<ContactModel>();
   }
 
-  Future<List<ContactModel>> getContacts() async {
+  Future<List<ContactModel>> getContacts({
+    String query = '',
+    bool isAscending = true,
+  }) async {
+    final lowerCaseQuery = query.toLowerCase();
+
+    // Building the query based on whether there is a search term or not
+    final queryBuilder = _contactBox.query((query.isNotEmpty
+        ? (ContactModel_.firstName
+                .contains(lowerCaseQuery, caseSensitive: false) |
+            ContactModel_.lastName
+                .contains(lowerCaseQuery, caseSensitive: false))
+        : null));
+
+    // Applying the sort order to the query
+    queryBuilder.order(
+      ContactModel_.firstName,
+      flags: isAscending ? 0 : Order.descending,
+    );
+
+    return queryBuilder.build().find();
+  }
+
+  ContactModel addContact(ContactModel contact) {
+    var id = _contactBox.put(contact);
+    return _contactBox.get(id)!;
+  }
+
+  List<ContactModel> addContacts(List<ContactModel> contacts) {
+    _contactBox.putMany(contacts);
     return _contactBox.getAll();
   }
 
-  Future<void> addContact(ContactModel contact) async {
+  ContactModel updateContact(ContactModel contact) {
     _contactBox.put(contact);
+    return _contactBox.get(contact.id)!;
   }
 
-  Future<void> addContacts(List<ContactModel> contacts) async {
-    _contactBox.putMany(contacts);
-  }
-
-  Future<void> updateContact(ContactModel contact) async {
-    _contactBox.put(contact);
-  }
-
-  Future<void> deleteContact(int id) async {
+  void deleteContact(int id) {
     _contactBox.remove(id);
   }
 
-  bool isEmpty() {
-    return _contactBox.isEmpty();
-  }
-
-  Future<List<ContactModel>> searchContacts(String query) async {
+  List<ContactModel> searchContacts(String query, {required bool isAscending}) {
     final lowerCaseQuery = query.toLowerCase();
 
-    final queryBuilder = _contactBox.query(ContactModel_.firstName
-            .contains(lowerCaseQuery, caseSensitive: false) |
-        ContactModel_.lastName.contains(lowerCaseQuery, caseSensitive: false));
+    // Building the search query
+    final queryBuilder = _contactBox.query(
+      ContactModel_.firstName.contains(lowerCaseQuery, caseSensitive: false) |
+          ContactModel_.lastName.contains(lowerCaseQuery, caseSensitive: false),
+    );
+
+    // Applying sort order to the search query
+    queryBuilder.order(
+      ContactModel_.firstName,
+      flags: isAscending ? 0 : Order.descending,
+    );
 
     return queryBuilder.build().find();
   }

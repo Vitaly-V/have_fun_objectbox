@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/services.dart';
 
 import '../../domain/entities/entities.dart';
@@ -13,38 +12,37 @@ class ContactRepository implements ContactRepositoryInterface {
   ContactRepository(this.dataSource);
 
   @override
-  Future<List<Contact>> getContacts() async {
-    var models = await dataSource.getContacts();
-    return models.map((model) => model.toEntity()).toList();
+  List<Contact> getContacts({String query = '', bool isAscending = true}) {
+    final contactModels =
+        dataSource.searchContacts(query, isAscending: isAscending);
+    return contactModels.map((model) => model.toEntity()).toList();
   }
 
   @override
-  Future<void> addContact(Contact contact) async {
-    var model = ContactModel.fromEntity(contact);
-    await dataSource.addContact(model);
+  Contact addContact(Contact contact) {
+    final model = ContactModel.fromEntity(contact);
+    ContactModel addedModel = dataSource.addContact(model);
+    return addedModel.toEntity();
   }
 
   @override
-  Future<void> addContacts(List<Contact> contacts) async {
-    var models =
+  List<Contact> addContacts(List<Contact> contacts) {
+    final models =
         contacts.map((contact) => ContactModel.fromEntity(contact)).toList();
-    await dataSource.addContacts(models);
+    final contactModels = dataSource.addContacts(models);
+    return contactModels.map((model) => model.toEntity()).toList();
   }
 
   @override
-  Future<void> updateContact(Contact contact) async {
-    var model = ContactModel.fromEntity(contact);
-    await dataSource.updateContact(model);
+  Contact updateContact(Contact contact) {
+    final model = ContactModel.fromEntity(contact);
+    ContactModel updatedContact = dataSource.updateContact(model);
+    return updatedContact.toEntity();
   }
 
   @override
   Future<void> deleteContact(int id) async {
-    await dataSource.deleteContact(id);
-  }
-
-  @override
-  bool isEmpty() {
-    return dataSource.isEmpty();
+    dataSource.deleteContact(id);
   }
 
   @override
@@ -55,50 +53,41 @@ class ContactRepository implements ContactRepositoryInterface {
 
     final List<Contact> contacts = jsonData.map((contactJson) {
       // Parse phone numbers
-      List<String> phoneNumbers = [];
-      if (contactJson['phoneNumbers'] != null) {
-        phoneNumbers = List<String>.from(contactJson['phoneNumbers']);
-      } else if (contactJson['phoneNumber'] != null) {
-        phoneNumbers = [contactJson['phoneNumber']];
-      }
+      final List<Phone> phones = (contactJson['phones'] != null)
+          ? (contactJson['phones'] as List<dynamic>)
+              .map((phoneJson) => Phone(number: phoneJson as String))
+              .toList()
+          : [
+              if (contactJson['phoneNumber'] != null)
+                Phone(number: contactJson['phoneNumber'] as String)
+            ];
 
       // Parse addresses
-      List<Address> addresses = [];
-      if (contactJson['addresses'] != null) {
-        addresses = (contactJson['addresses'] as List<dynamic>)
-            .map((addressJson) =>
-                Address.fromJson(addressJson as Map<String, dynamic>))
-            .toList();
-      } else {
-        // Handle cases where addresses are not provided in the new structure
-        addresses = [
-          Address(
-            streetAddress1: contactJson['streetAddress1'] as String,
-            streetAddress2: contactJson['streetAddress2'] as String,
-            city: contactJson['city'] as String,
-            state: contactJson['state'] as String,
-            zipCode: contactJson['zipCode'] as String,
-          )
-        ];
-      }
+      final List<Address> addresses = (contactJson['addresses'] != null)
+          ? (contactJson['addresses'] as List<dynamic>)
+              .map((addressJson) =>
+                  Address.fromJson(addressJson as Map<String, dynamic>))
+              .toList()
+          : [
+              Address(
+                streetAddress1: contactJson['streetAddress1'] as String,
+                streetAddress2: contactJson['streetAddress2'] as String,
+                city: contactJson['city'] as String,
+                state: contactJson['state'] as String,
+                zipCode: contactJson['zipCode'] as String,
+              )
+            ];
 
-      // Create a Contact object with the transformed phoneNumbers and addresses
       return Contact(
         id: contactJson['id'] as int?,
         contactID: contactJson['contactID'] as String,
         firstName: contactJson['firstName'] as String,
         lastName: contactJson['lastName'] as String,
-        phoneNumbers: phoneNumbers,
+        phones: phones,
         addresses: addresses,
       );
     }).toList();
 
-    await addContacts(contacts);
-  }
-
-  @override
-  Future<List<Contact>> searchContacts(String query) async {
-    final contactModels = await dataSource.searchContacts(query);
-    return contactModels.map((model) => model.toEntity()).toList();
+    addContacts(contacts);
   }
 }

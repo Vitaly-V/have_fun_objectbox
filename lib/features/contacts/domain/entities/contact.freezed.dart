@@ -24,8 +24,7 @@ mixin _$Contact {
   String get contactID => throw _privateConstructorUsedError;
   String get firstName => throw _privateConstructorUsedError;
   String get lastName => throw _privateConstructorUsedError;
-  List<String> get phoneNumbers =>
-      throw _privateConstructorUsedError; // Updated to support multiple phone numbers
+  List<Phone> get phones => throw _privateConstructorUsedError;
   List<Address> get addresses => throw _privateConstructorUsedError;
 
   /// Serializes this Contact to a JSON map.
@@ -47,7 +46,7 @@ abstract class $ContactCopyWith<$Res> {
       String contactID,
       String firstName,
       String lastName,
-      List<String> phoneNumbers,
+      List<Phone> phones,
       List<Address> addresses});
 }
 
@@ -70,7 +69,7 @@ class _$ContactCopyWithImpl<$Res, $Val extends Contact>
     Object? contactID = null,
     Object? firstName = null,
     Object? lastName = null,
-    Object? phoneNumbers = null,
+    Object? phones = null,
     Object? addresses = null,
   }) {
     return _then(_value.copyWith(
@@ -90,10 +89,10 @@ class _$ContactCopyWithImpl<$Res, $Val extends Contact>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      phoneNumbers: null == phoneNumbers
-          ? _value.phoneNumbers
-          : phoneNumbers // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      phones: null == phones
+          ? _value.phones
+          : phones // ignore: cast_nullable_to_non_nullable
+              as List<Phone>,
       addresses: null == addresses
           ? _value.addresses
           : addresses // ignore: cast_nullable_to_non_nullable
@@ -114,7 +113,7 @@ abstract class _$$ContactImplCopyWith<$Res> implements $ContactCopyWith<$Res> {
       String contactID,
       String firstName,
       String lastName,
-      List<String> phoneNumbers,
+      List<Phone> phones,
       List<Address> addresses});
 }
 
@@ -135,7 +134,7 @@ class __$$ContactImplCopyWithImpl<$Res>
     Object? contactID = null,
     Object? firstName = null,
     Object? lastName = null,
-    Object? phoneNumbers = null,
+    Object? phones = null,
     Object? addresses = null,
   }) {
     return _then(_$ContactImpl(
@@ -155,10 +154,10 @@ class __$$ContactImplCopyWithImpl<$Res>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      phoneNumbers: null == phoneNumbers
-          ? _value._phoneNumbers
-          : phoneNumbers // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      phones: null == phones
+          ? _value._phones
+          : phones // ignore: cast_nullable_to_non_nullable
+              as List<Phone>,
       addresses: null == addresses
           ? _value._addresses
           : addresses // ignore: cast_nullable_to_non_nullable
@@ -175,9 +174,9 @@ class _$ContactImpl implements _Contact {
       required this.contactID,
       required this.firstName,
       required this.lastName,
-      required final List<String> phoneNumbers,
+      required final List<Phone> phones,
       required final List<Address> addresses})
-      : _phoneNumbers = phoneNumbers,
+      : _phones = phones,
         _addresses = addresses;
 
   factory _$ContactImpl.fromJson(Map<String, dynamic> json) =>
@@ -191,17 +190,15 @@ class _$ContactImpl implements _Contact {
   final String firstName;
   @override
   final String lastName;
-  final List<String> _phoneNumbers;
+  final List<Phone> _phones;
   @override
-  List<String> get phoneNumbers {
-    if (_phoneNumbers is EqualUnmodifiableListView) return _phoneNumbers;
+  List<Phone> get phones {
+    if (_phones is EqualUnmodifiableListView) return _phones;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_phoneNumbers);
+    return EqualUnmodifiableListView(_phones);
   }
 
-// Updated to support multiple phone numbers
   final List<Address> _addresses;
-// Updated to support multiple phone numbers
   @override
   List<Address> get addresses {
     if (_addresses is EqualUnmodifiableListView) return _addresses;
@@ -211,7 +208,7 @@ class _$ContactImpl implements _Contact {
 
   @override
   String toString() {
-    return 'Contact(id: $id, contactID: $contactID, firstName: $firstName, lastName: $lastName, phoneNumbers: $phoneNumbers, addresses: $addresses)';
+    return 'Contact(id: $id, contactID: $contactID, firstName: $firstName, lastName: $lastName, phones: $phones, addresses: $addresses)';
   }
 
   @override
@@ -226,8 +223,7 @@ class _$ContactImpl implements _Contact {
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
-            const DeepCollectionEquality()
-                .equals(other._phoneNumbers, _phoneNumbers) &&
+            const DeepCollectionEquality().equals(other._phones, _phones) &&
             const DeepCollectionEquality()
                 .equals(other._addresses, _addresses));
   }
@@ -240,7 +236,7 @@ class _$ContactImpl implements _Contact {
       contactID,
       firstName,
       lastName,
-      const DeepCollectionEquality().hash(_phoneNumbers),
+      const DeepCollectionEquality().hash(_phones),
       const DeepCollectionEquality().hash(_addresses));
 
   /// Create a copy of Contact
@@ -265,7 +261,7 @@ abstract class _Contact implements Contact {
       required final String contactID,
       required final String firstName,
       required final String lastName,
-      required final List<String> phoneNumbers,
+      required final List<Phone> phones,
       required final List<Address> addresses}) = _$ContactImpl;
 
   factory _Contact.fromJson(Map<String, dynamic> json) = _$ContactImpl.fromJson;
@@ -279,7 +275,7 @@ abstract class _Contact implements Contact {
   @override
   String get lastName;
   @override
-  List<String> get phoneNumbers; // Updated to support multiple phone numbers
+  List<Phone> get phones;
   @override
   List<Address> get addresses;
 

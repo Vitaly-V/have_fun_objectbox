@@ -1,12 +1,10 @@
 import '../entities/entities.dart';
 
 abstract class ContactRepositoryInterface {
-  Future<List<Contact>> getContacts();
-  Future<void> addContact(Contact contact);
-  Future<void> addContacts(List<Contact> contacts);
-  Future<void> updateContact(Contact contact);
-  Future<void> deleteContact(int id);
-  bool isEmpty();
+  List<Contact> getContacts({String query, bool isAscending});
+  Contact addContact(Contact contact);
+  List<Contact> addContacts(List<Contact> contacts);
+  Contact updateContact(Contact contact);
+  void deleteContact(int id);
   Future<void> importContactsIfFirstLaunch();
-  Future<List<Contact>> searchContacts(String query);
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../../core/core.dart';
 import '../../domain/domain.dart';
 import '../widgets/contact_list_tile.dart';
+import '../widgets/widgets.dart';
 
 class ContactListScreen extends StatelessWidget {
   const ContactListScreen({super.key});
@@ -14,6 +14,7 @@ class ContactListScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Contacts'),
+        actions: const [SortButton()],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(48.0),
           child: Padding(
@@ -39,8 +40,8 @@ class ContactListScreen extends StatelessWidget {
       ),
       body: BlocConsumer<ContactBloc, ContactState>(
         listener: (context, state) {
-          if (state.contact != null) {
-            context.pushNamed(AppRoute.contact.name);
+          if (state.contact != null && !state.isLoading) {
+            context.goNamed(AppRoute.contact.name);
           }
         },
         builder: (context, state) {

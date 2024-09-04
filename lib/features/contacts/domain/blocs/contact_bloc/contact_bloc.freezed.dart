@@ -18,7 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ContactEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() contactsLoaded,
+    required TResult Function(bool isAscending, String searchQuery)
+        contactsLoaded,
     required TResult Function(Contact contact) contactAdded,
     required TResult Function(Contact contact) contactUpdated,
     required TResult Function(int id) contactDeleted,
@@ -28,7 +29,7 @@ mixin _$ContactEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? contactsLoaded,
+    TResult? Function(bool isAscending, String searchQuery)? contactsLoaded,
     TResult? Function(Contact contact)? contactAdded,
     TResult? Function(Contact contact)? contactUpdated,
     TResult? Function(int id)? contactDeleted,
@@ -38,7 +39,7 @@ mixin _$ContactEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? contactsLoaded,
+    TResult Function(bool isAscending, String searchQuery)? contactsLoaded,
     TResult Function(Contact contact)? contactAdded,
     TResult Function(Contact contact)? contactUpdated,
     TResult Function(int id)? contactDeleted,
@@ -106,6 +107,8 @@ abstract class _$$ContactsLoadedImplCopyWith<$Res> {
   factory _$$ContactsLoadedImplCopyWith(_$ContactsLoadedImpl value,
           $Res Function(_$ContactsLoadedImpl) then) =
       __$$ContactsLoadedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({bool isAscending, String searchQuery});
 }
 
 /// @nodoc
@@ -118,57 +121,96 @@ class __$$ContactsLoadedImplCopyWithImpl<$Res>
 
   /// Create a copy of ContactEvent
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isAscending = null,
+    Object? searchQuery = null,
+  }) {
+    return _then(_$ContactsLoadedImpl(
+      isAscending: null == isAscending
+          ? _value.isAscending
+          : isAscending // ignore: cast_nullable_to_non_nullable
+              as bool,
+      searchQuery: null == searchQuery
+          ? _value.searchQuery
+          : searchQuery // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$ContactsLoadedImpl implements ContactsLoaded {
-  const _$ContactsLoadedImpl();
+  const _$ContactsLoadedImpl({this.isAscending = true, this.searchQuery = ''});
+
+  @override
+  @JsonKey()
+  final bool isAscending;
+  @override
+  @JsonKey()
+  final String searchQuery;
 
   @override
   String toString() {
-    return 'ContactEvent.contactsLoaded()';
+    return 'ContactEvent.contactsLoaded(isAscending: $isAscending, searchQuery: $searchQuery)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ContactsLoadedImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$ContactsLoadedImpl &&
+            (identical(other.isAscending, isAscending) ||
+                other.isAscending == isAscending) &&
+            (identical(other.searchQuery, searchQuery) ||
+                other.searchQuery == searchQuery));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, isAscending, searchQuery);
+
+  /// Create a copy of ContactEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ContactsLoadedImplCopyWith<_$ContactsLoadedImpl> get copyWith =>
+      __$$ContactsLoadedImplCopyWithImpl<_$ContactsLoadedImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() contactsLoaded,
+    required TResult Function(bool isAscending, String searchQuery)
+        contactsLoaded,
     required TResult Function(Contact contact) contactAdded,
     required TResult Function(Contact contact) contactUpdated,
     required TResult Function(int id) contactDeleted,
     required TResult Function(Contact contact) contactSelected,
     required TResult Function(String query) contactsSearched,
   }) {
-    return contactsLoaded();
+    return contactsLoaded(isAscending, searchQuery);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? contactsLoaded,
+    TResult? Function(bool isAscending, String searchQuery)? contactsLoaded,
     TResult? Function(Contact contact)? contactAdded,
     TResult? Function(Contact contact)? contactUpdated,
     TResult? Function(int id)? contactDeleted,
     TResult? Function(Contact contact)? contactSelected,
     TResult? Function(String query)? contactsSearched,
   }) {
-    return contactsLoaded?.call();
+    return contactsLoaded?.call(isAscending, searchQuery);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? contactsLoaded,
+    TResult Function(bool isAscending, String searchQuery)? contactsLoaded,
     TResult Function(Contact contact)? contactAdded,
     TResult Function(Contact contact)? contactUpdated,
     TResult Function(int id)? contactDeleted,
@@ -177,7 +219,7 @@ class _$ContactsLoadedImpl implements ContactsLoaded {
     required TResult orElse(),
   }) {
     if (contactsLoaded != null) {
-      return contactsLoaded();
+      return contactsLoaded(isAscending, searchQuery);
     }
     return orElse();
   }
@@ -227,7 +269,18 @@ class _$ContactsLoadedImpl implements ContactsLoaded {
 }
 
 abstract class ContactsLoaded implements ContactEvent {
-  const factory ContactsLoaded() = _$ContactsLoadedImpl;
+  const factory ContactsLoaded(
+      {final bool isAscending,
+      final String searchQuery}) = _$ContactsLoadedImpl;
+
+  bool get isAscending;
+  String get searchQuery;
+
+  /// Create a copy of ContactEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ContactsLoadedImplCopyWith<_$ContactsLoadedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -310,7 +363,8 @@ class _$ContactAddedImpl implements ContactAdded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() contactsLoaded,
+    required TResult Function(bool isAscending, String searchQuery)
+        contactsLoaded,
     required TResult Function(Contact contact) contactAdded,
     required TResult Function(Contact contact) contactUpdated,
     required TResult Function(int id) contactDeleted,
@@ -323,7 +377,7 @@ class _$ContactAddedImpl implements ContactAdded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? contactsLoaded,
+    TResult? Function(bool isAscending, String searchQuery)? contactsLoaded,
     TResult? Function(Contact contact)? contactAdded,
     TResult? Function(Contact contact)? contactUpdated,
     TResult? Function(int id)? contactDeleted,
@@ -336,7 +390,7 @@ class _$ContactAddedImpl implements ContactAdded {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? contactsLoaded,
+    TResult Function(bool isAscending, String searchQuery)? contactsLoaded,
     TResult Function(Contact contact)? contactAdded,
     TResult Function(Contact contact)? contactUpdated,
     TResult Function(int id)? contactDeleted,
@@ -487,7 +541,8 @@ class _$ContactUpdatedImpl implements ContactUpdated {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() contactsLoaded,
+    required TResult Function(bool isAscending, String searchQuery)
+        contactsLoaded,
     required TResult Function(Contact contact) contactAdded,
     required TResult Function(Contact contact) contactUpdated,
     required TResult Function(int id) contactDeleted,
@@ -500,7 +555,7 @@ class _$ContactUpdatedImpl implements ContactUpdated {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? contactsLoaded,
+    TResult? Function(bool isAscending, String searchQuery)? contactsLoaded,
     TResult? Function(Contact contact)? contactAdded,
     TResult? Function(Contact contact)? contactUpdated,
     TResult? Function(int id)? contactDeleted,
@@ -513,7 +568,7 @@ class _$ContactUpdatedImpl implements ContactUpdated {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? contactsLoaded,
+    TResult Function(bool isAscending, String searchQuery)? contactsLoaded,
     TResult Function(Contact contact)? contactAdded,
     TResult Function(Contact contact)? contactUpdated,
     TResult Function(int id)? contactDeleted,
@@ -652,7 +707,8 @@ class _$ContactDeletedImpl implements ContactDeleted {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() contactsLoaded,
+    required TResult Function(bool isAscending, String searchQuery)
+        contactsLoaded,
     required TResult Function(Contact contact) contactAdded,
     required TResult Function(Contact contact) contactUpdated,
     required TResult Function(int id) contactDeleted,
@@ -665,7 +721,7 @@ class _$ContactDeletedImpl implements ContactDeleted {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? contactsLoaded,
+    TResult? Function(bool isAscending, String searchQuery)? contactsLoaded,
     TResult? Function(Contact contact)? contactAdded,
     TResult? Function(Contact contact)? contactUpdated,
     TResult? Function(int id)? contactDeleted,
@@ -678,7 +734,7 @@ class _$ContactDeletedImpl implements ContactDeleted {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? contactsLoaded,
+    TResult Function(bool isAscending, String searchQuery)? contactsLoaded,
     TResult Function(Contact contact)? contactAdded,
     TResult Function(Contact contact)? contactUpdated,
     TResult Function(int id)? contactDeleted,
@@ -829,7 +885,8 @@ class _$ContactSelectedImpl implements ContactSelected {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() contactsLoaded,
+    required TResult Function(bool isAscending, String searchQuery)
+        contactsLoaded,
     required TResult Function(Contact contact) contactAdded,
     required TResult Function(Contact contact) contactUpdated,
     required TResult Function(int id) contactDeleted,
@@ -842,7 +899,7 @@ class _$ContactSelectedImpl implements ContactSelected {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? contactsLoaded,
+    TResult? Function(bool isAscending, String searchQuery)? contactsLoaded,
     TResult? Function(Contact contact)? contactAdded,
     TResult? Function(Contact contact)? contactUpdated,
     TResult? Function(int id)? contactDeleted,
@@ -855,7 +912,7 @@ class _$ContactSelectedImpl implements ContactSelected {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? contactsLoaded,
+    TResult Function(bool isAscending, String searchQuery)? contactsLoaded,
     TResult Function(Contact contact)? contactAdded,
     TResult Function(Contact contact)? contactUpdated,
     TResult Function(int id)? contactDeleted,
@@ -994,7 +1051,8 @@ class _$ContactsSearchedImpl implements ContactsSearched {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() contactsLoaded,
+    required TResult Function(bool isAscending, String searchQuery)
+        contactsLoaded,
     required TResult Function(Contact contact) contactAdded,
     required TResult Function(Contact contact) contactUpdated,
     required TResult Function(int id) contactDeleted,
@@ -1007,7 +1065,7 @@ class _$ContactsSearchedImpl implements ContactsSearched {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? contactsLoaded,
+    TResult? Function(bool isAscending, String searchQuery)? contactsLoaded,
     TResult? Function(Contact contact)? contactAdded,
     TResult? Function(Contact contact)? contactUpdated,
     TResult? Function(int id)? contactDeleted,
@@ -1020,7 +1078,7 @@ class _$ContactsSearchedImpl implements ContactsSearched {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? contactsLoaded,
+    TResult Function(bool isAscending, String searchQuery)? contactsLoaded,
     TResult Function(Contact contact)? contactAdded,
     TResult Function(Contact contact)? contactUpdated,
     TResult Function(int id)? contactDeleted,
@@ -1095,6 +1153,8 @@ mixin _$ContactState {
   List<Contact> get contacts => throw _privateConstructorUsedError;
   Contact? get contact => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  String get searchQuery => throw _privateConstructorUsedError;
+  bool get isAscending => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
   /// Create a copy of ContactState
@@ -1114,6 +1174,8 @@ abstract class $ContactStateCopyWith<$Res> {
       {List<Contact> contacts,
       Contact? contact,
       bool isLoading,
+      String searchQuery,
+      bool isAscending,
       String? errorMessage});
 
   $ContactCopyWith<$Res>? get contact;
@@ -1137,6 +1199,8 @@ class _$ContactStateCopyWithImpl<$Res, $Val extends ContactState>
     Object? contacts = null,
     Object? contact = freezed,
     Object? isLoading = null,
+    Object? searchQuery = null,
+    Object? isAscending = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -1151,6 +1215,14 @@ class _$ContactStateCopyWithImpl<$Res, $Val extends ContactState>
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      searchQuery: null == searchQuery
+          ? _value.searchQuery
+          : searchQuery // ignore: cast_nullable_to_non_nullable
+              as String,
+      isAscending: null == isAscending
+          ? _value.isAscending
+          : isAscending // ignore: cast_nullable_to_non_nullable
               as bool,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
@@ -1186,6 +1258,8 @@ abstract class _$$ContactStateImplCopyWith<$Res>
       {List<Contact> contacts,
       Contact? contact,
       bool isLoading,
+      String searchQuery,
+      bool isAscending,
       String? errorMessage});
 
   @override
@@ -1208,6 +1282,8 @@ class __$$ContactStateImplCopyWithImpl<$Res>
     Object? contacts = null,
     Object? contact = freezed,
     Object? isLoading = null,
+    Object? searchQuery = null,
+    Object? isAscending = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$ContactStateImpl(
@@ -1222,6 +1298,14 @@ class __$$ContactStateImplCopyWithImpl<$Res>
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      searchQuery: null == searchQuery
+          ? _value.searchQuery
+          : searchQuery // ignore: cast_nullable_to_non_nullable
+              as String,
+      isAscending: null == isAscending
+          ? _value.isAscending
+          : isAscending // ignore: cast_nullable_to_non_nullable
               as bool,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
@@ -1238,6 +1322,8 @@ class _$ContactStateImpl implements _ContactState {
       {final List<Contact> contacts = const [],
       this.contact,
       this.isLoading = false,
+      this.searchQuery = '',
+      this.isAscending = false,
       this.errorMessage})
       : _contacts = contacts;
 
@@ -1256,11 +1342,17 @@ class _$ContactStateImpl implements _ContactState {
   @JsonKey()
   final bool isLoading;
   @override
+  @JsonKey()
+  final String searchQuery;
+  @override
+  @JsonKey()
+  final bool isAscending;
+  @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'ContactState(contacts: $contacts, contact: $contact, isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'ContactState(contacts: $contacts, contact: $contact, isLoading: $isLoading, searchQuery: $searchQuery, isAscending: $isAscending, errorMessage: $errorMessage)';
   }
 
   @override
@@ -1272,6 +1364,10 @@ class _$ContactStateImpl implements _ContactState {
             (identical(other.contact, contact) || other.contact == contact) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
+            (identical(other.searchQuery, searchQuery) ||
+                other.searchQuery == searchQuery) &&
+            (identical(other.isAscending, isAscending) ||
+                other.isAscending == isAscending) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
@@ -1282,6 +1378,8 @@ class _$ContactStateImpl implements _ContactState {
       const DeepCollectionEquality().hash(_contacts),
       contact,
       isLoading,
+      searchQuery,
+      isAscending,
       errorMessage);
 
   /// Create a copy of ContactState
@@ -1298,6 +1396,8 @@ abstract class _ContactState implements ContactState {
       {final List<Contact> contacts,
       final Contact? contact,
       final bool isLoading,
+      final String searchQuery,
+      final bool isAscending,
       final String? errorMessage}) = _$ContactStateImpl;
 
   @override
@@ -1306,6 +1406,10 @@ abstract class _ContactState implements ContactState {
   Contact? get contact;
   @override
   bool get isLoading;
+  @override
+  String get searchQuery;
+  @override
+  bool get isAscending;
   @override
   String? get errorMessage;
 

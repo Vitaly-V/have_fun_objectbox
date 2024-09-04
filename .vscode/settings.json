@@ -5,6 +5,7 @@
         "Compat",
         "mocktail",
         "objectbox",
+        "prefs",
         "Uids"
     ],
     "editor.codeActionsOnSave": {

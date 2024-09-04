@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import '../../domain/entities/entities.dart';
 
-class AddressFormState {
+class AddressForm {
   final TextEditingController _streetAddress1Controller;
   final TextEditingController _streetAddress2Controller;
   final TextEditingController _cityController;
   final TextEditingController _stateController;
   final TextEditingController _zipCodeController;
 
-  AddressFormState({Address? address})
+  AddressForm({Address? address})
       : _streetAddress1Controller =
             TextEditingController(text: address?.streetAddress1),
         _streetAddress2Controller =

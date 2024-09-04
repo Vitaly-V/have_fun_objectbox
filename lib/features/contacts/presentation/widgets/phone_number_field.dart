@@ -19,6 +19,7 @@ class PhoneNumberField extends StatelessWidget {
         Expanded(
           child: TextFormField(
             controller: controller,
+            keyboardType: TextInputType.phone,
             decoration: InputDecoration(
               labelText: 'Phone Number ${index + 1}',
             ),

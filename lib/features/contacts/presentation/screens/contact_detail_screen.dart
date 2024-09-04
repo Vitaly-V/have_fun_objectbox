@@ -15,7 +15,7 @@ class ContactDetailScreen extends StatelessWidget {
       appBar: AppBar(),
       body: BlocConsumer<ContactBloc, ContactState>(
         listener: (context, state) {
-          if (state.contact == null) {
+          if (state.contact == null && !state.isLoading) {
             context.goNamed(AppRoute.contacts.name);
           }
         },
@@ -30,97 +30,91 @@ class ContactDetailScreen extends StatelessWidget {
               elevation: 4.0,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              '${contact.firstName} ${contact.lastName}',
-                              maxLines: 2,
-                              style: const TextStyle(
-                                fontSize: 24.0,
-                                fontWeight: FontWeight.bold,
-                              ),
+                child: ListView(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            '${contact.firstName} ${contact.lastName}',
+                            maxLines: 2,
+                            style: const TextStyle(
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Row(
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.edit),
-                                onPressed: () {
-                                  context.goNamed(AppRoute.editContact.name);
-                                },
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.delete),
-                                onPressed: () {
-                                  context
-                                      .read<ContactBloc>()
-                                      .add(ContactDeleted(contact.id!));
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const Divider(),
-                      // Display each phone number
-                      ...contact.phoneNumbers
-                          .map((phoneNumber) => ContactDetailTile(
-                                icon: Icons.phone,
-                                label: 'Phone Number',
-                                value: phoneNumber,
-                              )),
-                      const Divider(),
-                      // Display each address
-                      ...contact.addresses.asMap().entries.map((entry) {
-                        final index = entry.key;
-                        final address = entry.value;
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        ),
+                        Row(
                           children: [
-                            Text(
-                              'Address ${index + 1}',
-                              style: const TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                              ),
+                            IconButton(
+                              icon: const Icon(Icons.edit),
+                              onPressed: () {
+                                context.pushNamed(AppRoute.editContact.name);
+                              },
                             ),
+                            IconButton(
+                              icon: const Icon(Icons.delete),
+                              onPressed: () {
+                                context
+                                    .read<ContactBloc>()
+                                    .add(ContactDeleted(contact.id!));
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const Divider(),
+                    ...contact.phones.map((phone) => ContactDetailTile(
+                          icon: Icons.phone,
+                          label: 'Phone Number',
+                          value: phone.number,
+                        )),
+                    const Divider(),
+                    ...contact.addresses.asMap().entries.map((entry) {
+                      final index = entry.key;
+                      final address = entry.value;
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Address ${index + 1}',
+                            style: const TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          ContactDetailTile(
+                            icon: Icons.home,
+                            label: 'Street Address 1',
+                            value: address.streetAddress1,
+                          ),
+                          if (address.streetAddress2.isNotEmpty)
                             ContactDetailTile(
                               icon: Icons.home,
-                              label: 'Street Address 1',
-                              value: address.streetAddress1,
+                              label: 'Street Address 2',
+                              value: address.streetAddress2,
                             ),
-                            if (address.streetAddress2.isNotEmpty)
-                              ContactDetailTile(
-                                icon: Icons.home,
-                                label: 'Street Address 2',
-                                value: address.streetAddress2,
-                              ),
-                            ContactDetailTile(
-                              icon: Icons.location_city,
-                              label: 'City',
-                              value: address.city,
-                            ),
-                            ContactDetailTile(
-                              icon: Icons.location_on,
-                              label: 'State',
-                              value: address.state,
-                            ),
-                            ContactDetailTile(
-                              icon: Icons.mail,
-                              label: 'Zip Code',
-                              value: address.zipCode,
-                            ),
-                            const Divider(),
-                          ],
-                        );
-                      }),
-                    ],
-                  ),
+                          ContactDetailTile(
+                            icon: Icons.location_city,
+                            label: 'City',
+                            value: address.city,
+                          ),
+                          ContactDetailTile(
+                            icon: Icons.location_on,
+                            label: 'State',
+                            value: address.state,
+                          ),
+                          ContactDetailTile(
+                            icon: Icons.mail,
+                            label: 'Zip Code',
+                            value: address.zipCode,
+                          ),
+                          const SizedBox(height: 8), // Space instead of Divider
+                        ],
+                      );
+                    }),
+                  ],
                 ),
               ),
             ),

@@ -4,91 +4,113 @@
   "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
   "entities": [
     {
-      "id": "1:8495289615564868449",
-      "lastPropertyId": "7:8787038161581568332",
+      "id": "1:284660998095849",
+      "lastPropertyId": "7:6674270776126487443",
       "name": "AddressModel",
       "properties": [
         {
-          "id": "1:2331782030422123245",
+          "id": "1:2867423595735138710",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "2:8935017646381914563",
+          "id": "2:8228252102333679471",
           "name": "streetAddress1",
           "type": 9
         },
         {
-          "id": "3:4608840774204258260",
+          "id": "3:9085492948952457399",
           "name": "streetAddress2",
           "type": 9
         },
         {
-          "id": "4:665697332881934786",
+          "id": "4:741715206146983510",
           "name": "city",
           "type": 9
         },
         {
-          "id": "5:460552528374158697",
+          "id": "5:1247337572436879637",
           "name": "state",
           "type": 9
         },
         {
-          "id": "6:6323604515362611106",
+          "id": "6:2947057940151242517",
           "name": "zipCode",
           "type": 9
         },
         {
-          "id": "7:8787038161581568332",
+          "id": "7:6674270776126487443",
           "name": "contactId",
           "type": 11,
           "flags": 520,
-          "indexId": "1:5769642547634830104",
+          "indexId": "1:4517331447323871726",
           "relationTarget": "ContactModel"
         }
       ],
       "relations": []
     },
     {
-      "id": "2:7529736509799682306",
-      "lastPropertyId": "5:6861553114493198524",
+      "id": "2:4419840646033537069",
+      "lastPropertyId": "4:8702385024493234700",
       "name": "ContactModel",
       "properties": [
         {
-          "id": "1:2855025359578090004",
+          "id": "1:3485903709601250518",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "2:8075427872486951477",
+          "id": "2:1959211968835224256",
           "name": "contactID",
           "type": 9,
           "flags": 2080,
-          "indexId": "2:1098468377347511481"
+          "indexId": "2:3944569320060335999"
         },
         {
-          "id": "3:9135665030574258102",
+          "id": "3:2895814111418569599",
           "name": "firstName",
           "type": 9
         },
         {
-          "id": "4:6807623916486118953",
+          "id": "4:8702385024493234700",
           "name": "lastName",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:5819627417609338457",
+      "lastPropertyId": "3:5630124047120612390",
+      "name": "PhoneModel",
+      "properties": [
+        {
+          "id": "1:1149526737268563214",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2022730730454161624",
+          "name": "number",
           "type": 9
         },
         {
-          "id": "5:6861553114493198524",
-          "name": "phoneNumbers",
-          "type": 9
+          "id": "3:5630124047120612390",
+          "name": "contactId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "3:2168423345545977334",
+          "relationTarget": "ContactModel"
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "2:7529736509799682306",
-  "lastIndexId": "2:1098468377347511481",
+  "lastEntityId": "3:5819627417609338457",
+  "lastIndexId": "3:2168423345545977334",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
