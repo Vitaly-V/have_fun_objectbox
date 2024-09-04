@@ -42,7 +42,14 @@ class ContactDataSource {
     return _contactBox.getAll();
   }
 
-  ContactModel updateContact(ContactModel contact) {
+  ContactModel updateContact(ContactModel contact, List<int> deletedAddressIds,
+      List<int> deletedPhoneIds) {
+    for (var addressId in deletedAddressIds) {
+      store.box<AddressModel>().remove(addressId);
+    }
+    for (var phoneId in deletedPhoneIds) {
+      store.box<PhoneModel>().remove(phoneId);
+    }
     _contactBox.put(contact);
     return _contactBox.get(contact.id)!;
   }
@@ -56,8 +63,9 @@ class ContactDataSource {
 
     // Building the search query
     final queryBuilder = _contactBox.query(
-      ContactModel_.firstName.contains(lowerCaseQuery, caseSensitive: false) |
-          ContactModel_.lastName.contains(lowerCaseQuery, caseSensitive: false),
+      ContactModel_.firstName.startsWith(lowerCaseQuery, caseSensitive: false) |
+          ContactModel_.lastName
+              .startsWith(lowerCaseQuery, caseSensitive: false),
     );
 
     // Applying sort order to the search query

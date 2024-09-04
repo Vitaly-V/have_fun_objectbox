@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
+import 'package:uuid/uuid.dart';
 import '../../domain/entities/entities.dart';
+import '../../helpers/helpers.dart';
 import 'phone_number_field.dart';
 import 'address_form.dart';
 
@@ -27,8 +28,6 @@ class _ContactFormState extends State<ContactForm> {
   late List<TextEditingController> _phoneNumberControllers;
   late List<AddressForm> _addressForms;
 
-  final logger = Logger();
-
   @override
   void initState() {
     super.initState();
@@ -37,17 +36,9 @@ class _ContactFormState extends State<ContactForm> {
     _firstNameController = TextEditingController(text: contact?.firstName);
     _lastNameController = TextEditingController(text: contact?.lastName);
 
-    // Initialize phone numbers
-    _phoneNumberControllers = contact?.phones.map((phone) {
-          return TextEditingController(text: phone.number);
-        }).toList() ??
-        [TextEditingController()];
-
-    // Initialize addresses
-    _addressForms = contact?.addresses.map((address) {
-          return AddressForm(address: address);
-        }).toList() ??
-        [AddressForm()];
+    // Initialize phone numbers and addresses using helper functions
+    _phoneNumberControllers = initializePhoneControllers(contact);
+    _addressForms = initializeAddressForms(contact);
   }
 
   @override
@@ -92,14 +83,12 @@ class _ContactFormState extends State<ContactForm> {
     if (_formKey.currentState!.validate()) {
       final newContact = Contact(
         id: widget.initialContact?.id,
-        contactID: widget.initialContact?.contactID ??
-            DateTime.now().millisecondsSinceEpoch.toString(),
+        contactID: widget.initialContact?.contactID ?? const Uuid().v4(),
         firstName: _firstNameController.text,
         lastName: _lastNameController.text,
-        phones: _phoneNumberControllers
-            .map((controller) => Phone(number: controller.text))
-            .toList(),
-        addresses: _addressForms.map((form) => form.toAddress()).toList(),
+        phones: getPhonesFromControllers(
+            _phoneNumberControllers, widget.initialContact),
+        addresses: getAddressesFromForms(_addressForms, widget.initialContact),
       );
       widget.onSave(newContact);
     }
@@ -107,7 +96,6 @@ class _ContactFormState extends State<ContactForm> {
 
   @override
   Widget build(BuildContext context) {
-    logger.d(widget.initialContact?.id ?? 'No ID');
     return Form(
       key: _formKey,
       child: ListView(
@@ -156,7 +144,7 @@ class _ContactFormState extends State<ContactForm> {
             final index = entry.key;
             final form = entry.value;
             return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 form.build(context),
                 IconButton(

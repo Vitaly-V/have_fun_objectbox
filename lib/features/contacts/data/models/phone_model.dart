@@ -7,7 +7,6 @@ class PhoneModel {
   
   @Id()
   int id;
-
   String number;
 
   // ObjectBox relationship to ContactModel
@@ -20,12 +19,14 @@ class PhoneModel {
 
   Phone toEntity() {
     return Phone(
+      id: id ,
       number: number,
     );
   }
 
   static PhoneModel fromEntity(Phone phone) {
     return PhoneModel(
+      id: phone.id ?? 0,
       number: phone.number,
     );
   }

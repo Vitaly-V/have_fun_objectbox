@@ -20,6 +20,7 @@ Phone _$PhoneFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Phone {
+  int? get id => throw _privateConstructorUsedError;
   String get number => throw _privateConstructorUsedError;
 
   /// Serializes this Phone to a JSON map.
@@ -36,7 +37,7 @@ abstract class $PhoneCopyWith<$Res> {
   factory $PhoneCopyWith(Phone value, $Res Function(Phone) then) =
       _$PhoneCopyWithImpl<$Res, Phone>;
   @useResult
-  $Res call({String number});
+  $Res call({int? id, String number});
 }
 
 /// @nodoc
@@ -54,9 +55,14 @@ class _$PhoneCopyWithImpl<$Res, $Val extends Phone>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? number = null,
   }) {
     return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       number: null == number
           ? _value.number
           : number // ignore: cast_nullable_to_non_nullable
@@ -72,7 +78,7 @@ abstract class _$$PhoneImplCopyWith<$Res> implements $PhoneCopyWith<$Res> {
       __$$PhoneImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String number});
+  $Res call({int? id, String number});
 }
 
 /// @nodoc
@@ -88,9 +94,14 @@ class __$$PhoneImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? number = null,
   }) {
     return _then(_$PhoneImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       number: null == number
           ? _value.number
           : number // ignore: cast_nullable_to_non_nullable
@@ -102,17 +113,19 @@ class __$$PhoneImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$PhoneImpl implements _Phone {
-  const _$PhoneImpl({required this.number});
+  const _$PhoneImpl({this.id, required this.number});
 
   factory _$PhoneImpl.fromJson(Map<String, dynamic> json) =>
       _$$PhoneImplFromJson(json);
 
   @override
+  final int? id;
+  @override
   final String number;
 
   @override
   String toString() {
-    return 'Phone(number: $number)';
+    return 'Phone(id: $id, number: $number)';
   }
 
   @override
@@ -120,12 +133,13 @@ class _$PhoneImpl implements _Phone {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PhoneImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.number, number) || other.number == number));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, number);
+  int get hashCode => Object.hash(runtimeType, id, number);
 
   /// Create a copy of Phone
   /// with the given fields replaced by the non-null parameter values.
@@ -144,10 +158,13 @@ class _$PhoneImpl implements _Phone {
 }
 
 abstract class _Phone implements Phone {
-  const factory _Phone({required final String number}) = _$PhoneImpl;
+  const factory _Phone({final int? id, required final String number}) =
+      _$PhoneImpl;
 
   factory _Phone.fromJson(Map<String, dynamic> json) = _$PhoneImpl.fromJson;
 
+  @override
+  int? get id;
   @override
   String get number;
 

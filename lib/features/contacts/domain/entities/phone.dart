@@ -6,6 +6,7 @@ part 'phone.g.dart';
 @freezed
 class Phone with _$Phone {
   const factory Phone({
+    int? id,
     required String number,
   }) = _Phone;
 

@@ -25,8 +25,9 @@ class AddressForm {
     _zipCodeController.dispose();
   }
 
-  Address toAddress() {
+  Address toAddress({int? id}) {
     return Address(
+      id: id,
       streetAddress1: _streetAddress1Controller.text,
       streetAddress2: _streetAddress2Controller.text,
       city: _cityController.text,

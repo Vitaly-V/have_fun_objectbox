@@ -64,18 +64,55 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
   Future<void> _onUpdateContact(
       ContactUpdated event, Emitter<ContactState> emit) async {
     try {
+      // Start loading state
       emit(state.copyWith(isLoading: true, errorMessage: null));
-      var updatedContact = contactRepository.updateContact(event.contact);
-      var updatedContacts = [...state.contacts].map((contact) {
-        if (contact.id == updatedContact.id) {
-          return updatedContact;
+
+      // Initialize lists to keep track of deleted entities
+      List<int> deletedAddressIds = [];
+      List<int> deletedPhoneIds = [];
+
+      // Find addresses that are no longer in the updated contact
+      state.contact?.addresses.forEach((existingAddress) {
+        bool isAddressDeleted = event.contact.addresses
+                .any((newAddress) => newAddress.id == existingAddress.id) ==
+            false;
+        if (isAddressDeleted && existingAddress.id != null) {
+          deletedAddressIds.add(existingAddress.id!);
         }
-        return contact;
+      });
+
+      // Find phones that are no longer in the updated contact
+      state.contact?.phones.forEach((existingPhone) {
+        bool isPhoneDeleted = event.contact.phones
+                .any((newPhone) => newPhone.id == existingPhone.id) ==
+            false;
+        if (isPhoneDeleted && existingPhone.id != null) {
+          deletedPhoneIds.add(existingPhone.id!);
+        }
+      });
+
+      // Update contact and handle deletions
+      var updatedContact = contactRepository.updateContact(
+        event.contact,
+        deletedAddressIds: deletedAddressIds,
+        deletedPhoneIds: deletedPhoneIds,
+      );
+
+      // Update the contact list in state
+      var updatedContacts = state.contacts.map((contact) {
+        return contact.id == updatedContact.id ? updatedContact : contact;
       }).toList();
+
+      // Emit the new state with the updated contact
       emit(state.copyWith(
-          isLoading: false, contacts: updatedContacts, contact: event.contact));
-      AppLogger.logger.i('Contact updated: ${event.contact}');
+        isLoading: false,
+        contacts: updatedContacts,
+        contact: updatedContact,
+      ));
+
+      AppLogger.logger.i('Contact updated: $updatedContact');
     } catch (error) {
+      // Handle errors and emit the error state
       emit(state.copyWith(isLoading: false, errorMessage: error.toString()));
       AppLogger.logger.e('Error updating contact: $error');
     }

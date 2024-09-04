@@ -7,10 +7,12 @@ part of 'phone.dart';
 // **************************************************************************
 
 _$PhoneImpl _$$PhoneImplFromJson(Map<String, dynamic> json) => _$PhoneImpl(
+      id: (json['id'] as num?)?.toInt(),
       number: json['number'] as String,
     );
 
 Map<String, dynamic> _$$PhoneImplToJson(_$PhoneImpl instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'number': instance.number,
     };

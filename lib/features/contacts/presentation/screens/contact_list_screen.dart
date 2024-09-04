@@ -20,6 +20,7 @@ class ContactListScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
             child: TextField(
+              onTapOutside: (event) => FocusScope.of(context).unfocus(),
               autocorrect: false,
               onChanged: (query) {
                 context.read<ContactBloc>().add(ContactsSearched(query));

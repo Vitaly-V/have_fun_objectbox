@@ -20,6 +20,7 @@ Address _$AddressFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Address {
+  int? get id => throw _privateConstructorUsedError;
   String get streetAddress1 => throw _privateConstructorUsedError;
   String get streetAddress2 => throw _privateConstructorUsedError;
   String get city => throw _privateConstructorUsedError;
@@ -41,7 +42,8 @@ abstract class $AddressCopyWith<$Res> {
       _$AddressCopyWithImpl<$Res, Address>;
   @useResult
   $Res call(
-      {String streetAddress1,
+      {int? id,
+      String streetAddress1,
       String streetAddress2,
       String city,
       String state,
@@ -63,6 +65,7 @@ class _$AddressCopyWithImpl<$Res, $Val extends Address>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? streetAddress1 = null,
     Object? streetAddress2 = null,
     Object? city = null,
@@ -70,6 +73,10 @@ class _$AddressCopyWithImpl<$Res, $Val extends Address>
     Object? zipCode = null,
   }) {
     return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       streetAddress1: null == streetAddress1
           ? _value.streetAddress1
           : streetAddress1 // ignore: cast_nullable_to_non_nullable
@@ -102,7 +109,8 @@ abstract class _$$AddressImplCopyWith<$Res> implements $AddressCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String streetAddress1,
+      {int? id,
+      String streetAddress1,
       String streetAddress2,
       String city,
       String state,
@@ -122,6 +130,7 @@ class __$$AddressImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? streetAddress1 = null,
     Object? streetAddress2 = null,
     Object? city = null,
@@ -129,6 +138,10 @@ class __$$AddressImplCopyWithImpl<$Res>
     Object? zipCode = null,
   }) {
     return _then(_$AddressImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       streetAddress1: null == streetAddress1
           ? _value.streetAddress1
           : streetAddress1 // ignore: cast_nullable_to_non_nullable
@@ -157,7 +170,8 @@ class __$$AddressImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$AddressImpl implements _Address {
   const _$AddressImpl(
-      {required this.streetAddress1,
+      {this.id,
+      required this.streetAddress1,
       required this.streetAddress2,
       required this.city,
       required this.state,
@@ -166,6 +180,8 @@ class _$AddressImpl implements _Address {
   factory _$AddressImpl.fromJson(Map<String, dynamic> json) =>
       _$$AddressImplFromJson(json);
 
+  @override
+  final int? id;
   @override
   final String streetAddress1;
   @override
@@ -179,7 +195,7 @@ class _$AddressImpl implements _Address {
 
   @override
   String toString() {
-    return 'Address(streetAddress1: $streetAddress1, streetAddress2: $streetAddress2, city: $city, state: $state, zipCode: $zipCode)';
+    return 'Address(id: $id, streetAddress1: $streetAddress1, streetAddress2: $streetAddress2, city: $city, state: $state, zipCode: $zipCode)';
   }
 
   @override
@@ -187,6 +203,7 @@ class _$AddressImpl implements _Address {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AddressImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.streetAddress1, streetAddress1) ||
                 other.streetAddress1 == streetAddress1) &&
             (identical(other.streetAddress2, streetAddress2) ||
@@ -199,7 +216,7 @@ class _$AddressImpl implements _Address {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, streetAddress1, streetAddress2, city, state, zipCode);
+      runtimeType, id, streetAddress1, streetAddress2, city, state, zipCode);
 
   /// Create a copy of Address
   /// with the given fields replaced by the non-null parameter values.
@@ -219,7 +236,8 @@ class _$AddressImpl implements _Address {
 
 abstract class _Address implements Address {
   const factory _Address(
-      {required final String streetAddress1,
+      {final int? id,
+      required final String streetAddress1,
       required final String streetAddress2,
       required final String city,
       required final String state,
@@ -227,6 +245,8 @@ abstract class _Address implements Address {
 
   factory _Address.fromJson(Map<String, dynamic> json) = _$AddressImpl.fromJson;
 
+  @override
+  int? get id;
   @override
   String get streetAddress1;
   @override

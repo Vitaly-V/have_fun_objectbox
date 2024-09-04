@@ -27,6 +27,7 @@ class AddressModel {
 
   Address toEntity() {
     return Address(
+      id: id,
       streetAddress1: streetAddress1,
       streetAddress2: streetAddress2,
       city: city,
@@ -37,6 +38,7 @@ class AddressModel {
 
   static AddressModel fromEntity(Address address) {
     return AddressModel(
+      id: address.id ?? 0,
       streetAddress1: address.streetAddress1,
       streetAddress2: address.streetAddress2,
       city: address.city,

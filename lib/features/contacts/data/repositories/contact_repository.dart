@@ -34,9 +34,12 @@ class ContactRepository implements ContactRepositoryInterface {
   }
 
   @override
-  Contact updateContact(Contact contact) {
+  Contact updateContact(Contact contact,
+      {List<int> deletedAddressIds = const [],
+      List<int> deletedPhoneIds = const []}) {
     final model = ContactModel.fromEntity(contact);
-    ContactModel updatedContact = dataSource.updateContact(model);
+    ContactModel updatedContact =
+        dataSource.updateContact(model, deletedAddressIds, deletedPhoneIds);
     return updatedContact.toEntity();
   }
 
