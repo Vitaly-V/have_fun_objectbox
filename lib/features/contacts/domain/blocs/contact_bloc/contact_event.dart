@@ -9,5 +9,6 @@ class ContactEvent with _$ContactEvent {
   const factory ContactEvent.contactUpdated(Contact contact) = ContactUpdated;
   const factory ContactEvent.contactDeleted(int id) = ContactDeleted;
   const factory ContactEvent.contactSelected(Contact contact) = ContactSelected;
+  const factory ContactEvent.contactCleared() = ContactCleared;
   const factory ContactEvent.contactsSearched(String query) = ContactsSearched;
 }

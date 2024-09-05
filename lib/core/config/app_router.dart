@@ -1,5 +1,6 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../features/contacts/presentation/screens/screens.dart';
+import '../../features/contacts/contacts.dart';
 
 enum AppRoute { contacts, contact, editContact, addContact }
 
@@ -13,6 +14,10 @@ final GoRouter appRouter = GoRouter(
           GoRoute(
               name: AppRoute.contact.name,
               path: 'contact',
+              onExit: (context, state) {
+                context.read<ContactBloc>().add(const ContactCleared());
+                return true;
+              },
               builder: (context, state) {
                 return const ContactDetailScreen();
               },

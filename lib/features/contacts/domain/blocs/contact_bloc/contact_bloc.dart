@@ -21,6 +21,7 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
     on<ContactUpdated>(_onUpdateContact);
     on<ContactDeleted>(_onDeleteContact);
     on<ContactSelected>(_onSelectContact);
+    on<ContactCleared>(_onClearContact);
     on<ContactsSearched>(_onSearchContacts,
         transformer: debounce(const Duration(milliseconds: 300)));
   }
@@ -139,6 +140,12 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
     emit(state.copyWith(contact: event.contact));
     AppLogger.logger.i(
         'Contact selected: ${event.contact.firstName} ${event.contact.lastName}');
+  }
+
+  Future<void> _onClearContact(
+      ContactCleared event, Emitter<ContactState> emit) async {
+    emit(state.copyWith(contact: null));
+    AppLogger.logger.i('Contact cleared');
   }
 
   Future<void> _onSearchContacts(
